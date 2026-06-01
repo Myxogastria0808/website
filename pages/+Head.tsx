@@ -1,7 +1,8 @@
-// https://vike.dev/Head
-
-import logoUrl from "../assets/logo.svg";
-
-export function Head() {
-  return <link rel="icon" href={logoUrl} />;
+export default function Head() {
+  return (
+    <>
+      <meta charSet="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </>
+  );
 }
