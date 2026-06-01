@@ -6,18 +6,19 @@
       "name": "vite-project",
       "dependencies": {
         "@cloudflare/vite-plugin": "^1.39.1",
-        "react": "^19.2.6",
-        "react-dom": "^19.2.6",
+        "gsap": "^3.15.0",
+        "react": "^19.2.7",
+        "react-dom": "^19.2.7",
         "vike": "0.4.259",
         "vike-react": "^0.6.23",
         "wrangler": "^4.96.0",
       },
       "devDependencies": {
-        "@types/react": "^19.2.15",
+        "@types/react": "^19.2.16",
         "@types/react-dom": "^19.2.3",
         "@vitejs/plugin-react": "^6.0.2",
         "typescript": "^6.0.3",
-        "vite": "^8.0.14",
+        "vite": "^8.0.16",
       },
     },
   },
@@ -307,6 +308,8 @@
     "fsevents": ["fsevents@2.3.3", "", { "os": "darwin" }, "sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw=="],
 
     "gensync": ["gensync@1.0.0-beta.2", "", {}, "sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg=="],
+
+    "gsap": ["gsap@3.15.0", "", {}, "sha512-dMW4CWBTUK1AEEDeZc1g4xpPGIrSf9fJF960qbTZmN/QwZIWY5wgliS6JWl9/25fpTGJrMRtSjGtOmPnfjZB+A=="],
 
     "isbot-fast": ["isbot-fast@1.2.0", "", {}, "sha512-twjuQzy2gKMDVfKGQyQqrx6Uy4opu/fiVUTTpdqtFsd7OQijIp5oXvb27n5EemYXaijh5fomndJt/SPRLsEdSg=="],
 

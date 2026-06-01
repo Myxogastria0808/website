@@ -1,8 +1,17 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "compatibility_date": "2026-05-29",
-  "name": "my-vike-cloudflare-app",
+  "name": "website",
   "main": "vike:server-entry",
+  "observability": {
+    "logs": {
+      "enabled": true,
+      "invocation_logs": true,
+    },
+    "traces": {
+      "enabled": true,
+    },
+  },
   // Only required if your app (or one of your libraries) uses a Node.js API
   // "compatibility_flags": ["nodejs_compat"],
 }
