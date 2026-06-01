@@ -15,8 +15,14 @@
       {
         devShells.default = pkgs.mkShell {
           packages = with pkgs; [
+            nodejs
             bun
+            cacert
           ];
+          shellHook = ''
+            export NIX_SSL_CERT_FILE="${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
+            export NODE_EXTRA_CA_CERTS="$NIX_SSL_CERT_FILE"
+          '';
         };
       }
     );

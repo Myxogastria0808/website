@@ -9,6 +9,8 @@ const config: Config = {
   title: "My Vike App",
   description: "Demo showcasing Vike",
 
+  server: true,
+
   extends: [vikeReact],
 };
 
