@@ -15,13 +15,11 @@
       {
         devShells.default = pkgs.mkShell {
           packages = with pkgs; [
-            # JavaScript / TypeScript
             nodejs
             corepack
-            # Elm
-            elmPackages.elm
           ];
         };
       }
     );
 }
+
