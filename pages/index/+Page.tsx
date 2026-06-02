@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 
-const MIN_SIZE = 10;
-const MAX_SIZE = 50;
-const DROP_COUNT = 30;
-const TARGET_FPS = 60;
+const MIN_SIZE = 10; // Minimum size of a drop (farthest drops)
+const MAX_SIZE = 50; // Maximum size of a drop (closest drops)
+const DROP_COUNT = 30; // Total number of drops to animate
+const TARGET_FPS = 60; // Target frames per second for the animation
 const MIN_SPEED = 1.2; // Speed of the smallest (farthest) drops (px/frame)
 const MAX_SPEED = 6; // Speed of the largest (closest) drops (px/frame)
 
@@ -158,9 +158,7 @@ export default function Page() {
         cssW = canvas.offsetWidth;
         cssH = canvas.offsetHeight;
         // Reinitialize drops with new canvas dimensions and sort them again
-        drops.current = Array.from({ length: DROP_COUNT }, () =>
-          makeDrop(cssW, cssH),
-        );
+        drops.current = Array.from({ length: DROP_COUNT }, () => makeDrop(cssW, cssH));
         // Sort drops again to maintain correct drawing order after resizing, as sizes may have changed due to new canvas dimensions
         drops.current.sort((a, b) => a.size - b.size);
       }, 150);
@@ -208,8 +206,9 @@ export default function Page() {
           height: "100%",
         }}
       >
-        <h1>Hello</h1>
+        <h1>Hello, World's Observer</h1>
       </div>
     </section>
   );
 }
+
