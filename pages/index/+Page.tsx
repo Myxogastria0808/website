@@ -48,15 +48,17 @@ export default function Page() {
     const canvas = canvasRef.current; // Access the canvas element
     if (!canvas) return; // Guard against null reference
 
-    const dpr = window.devicePixelRatio || 1;
-
     // Scale the backing store by DPR to avoid blur on high-DPI screens.
     // CSS size (offsetWidth/Height) stays unchanged; only the internal resolution is multiplied.
+    // DPR is read inside the function so it picks up the current value on every resize
+    // (e.g. when moving the window between monitors or changing zoom level).
     const setCanvasSize = () => {
+      const dpr = window.devicePixelRatio || 1;
       canvas.width = Math.round(canvas.offsetWidth * dpr);
       canvas.height = Math.round(canvas.offsetHeight * dpr);
+      return dpr;
     };
-    setCanvasSize();
+    const dpr = setCanvasSize();
 
     // Initialize drops with random properties based on the canvas dimensions
     // Use CSS pixel dimensions (offsetWidth/Height) so drop coordinates stay in CSS pixel space.
@@ -84,6 +86,8 @@ export default function Page() {
         rafId = requestAnimationFrame(draw);
         return;
       }
+      // Cap elapsed time to 3 frames to prevent drops from teleporting after tab is hidden/resumed.
+      const elapsed = Math.min(timestamp - lastTime, frameInterval * 3);
       lastTime = timestamp;
 
       // CSS pixel dimensions used for boundary checks and clearRect (context is already DPR-scaled)
@@ -93,7 +97,7 @@ export default function Page() {
       // Step 1: Update positions and reset drops that go off-screen
       let needsSort = false;
       for (const drop of drops.current) {
-        drop.y += drop.speed; // Move drop down by its speed
+        drop.y += drop.speed * (elapsed / frameInterval); // Scale by elapsed time to keep speed consistent across FPS variation
         // If the drop has moved off the bottom of the screen, reset it to the top with new properties
         if (drop.y > cssH + drop.size) {
           // Create a new drop with random properties
@@ -135,9 +139,10 @@ export default function Page() {
       clearTimeout(resizeTimer);
       // Debounce the resize event to avoid excessive calculations during rapid resizing
       resizeTimer = setTimeout(() => {
-        setCanvasSize();
-        // Re-apply DPR scale after canvas resize resets the context transform
-        ctx.scale(dpr, dpr);
+        // Re-apply DPR scale after canvas resize resets the context transform.
+        // setCanvasSize() returns the current DPR (may differ if monitor changed).
+        const newDpr = setCanvasSize();
+        ctx.scale(newDpr, newDpr);
         // Reinitialize drops with new canvas dimensions and sort them again
         drops.current = Array.from({ length: DROP_COUNT }, () =>
           makeDrop(canvas.offsetWidth, canvas.offsetHeight),
