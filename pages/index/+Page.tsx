@@ -77,10 +77,25 @@ export default function Page() {
     ctx.scale(dpr, dpr);
 
     let rafId: number;
-    let lastTime = 0;
+    // -1 is a sentinel meaning "not yet initialized".
+    // Initializing to 0 would make the first few frames be skipped (timestamp >> 0),
+    // then the first update would use an artificially large delta and cause a visible jump.
+    let lastTime = -1;
     const frameInterval = 1000 / TARGET_FPS;
 
+    // Cache CSS pixel dimensions to avoid layout reads (offsetWidth/Height) inside the draw loop.
+    // Updated in handleResize whenever the canvas actually changes size.
+    let cssW = canvas.offsetWidth;
+    let cssH = canvas.offsetHeight;
+
     const draw = (timestamp: number) => {
+      // Initialize lastTime from the very first RAF timestamp to avoid a large initial delta.
+      if (lastTime < 0) {
+        lastTime = timestamp;
+        rafId = requestAnimationFrame(draw);
+        return;
+      }
+
       // Frame rate control: Only update and redraw if enough time has passed since the last frame to maintain the target FPS.
       if (timestamp - lastTime < frameInterval) {
         rafId = requestAnimationFrame(draw);
@@ -89,10 +104,6 @@ export default function Page() {
       // Cap elapsed time to 3 frames to prevent drops from teleporting after tab is hidden/resumed.
       const elapsed = Math.min(timestamp - lastTime, frameInterval * 3);
       lastTime = timestamp;
-
-      // CSS pixel dimensions used for boundary checks and clearRect (context is already DPR-scaled)
-      const cssW = canvas.offsetWidth;
-      const cssH = canvas.offsetHeight;
 
       // Step 1: Update positions and reset drops that go off-screen
       let needsSort = false;
@@ -143,9 +154,12 @@ export default function Page() {
         // setCanvasSize() returns the current DPR (may differ if monitor changed).
         const newDpr = setCanvasSize();
         ctx.scale(newDpr, newDpr);
+        // Update cached CSS pixel dimensions after resize
+        cssW = canvas.offsetWidth;
+        cssH = canvas.offsetHeight;
         // Reinitialize drops with new canvas dimensions and sort them again
         drops.current = Array.from({ length: DROP_COUNT }, () =>
-          makeDrop(canvas.offsetWidth, canvas.offsetHeight),
+          makeDrop(cssW, cssH),
         );
         // Sort drops again to maintain correct drawing order after resizing, as sizes may have changed due to new canvas dimensions
         drops.current.sort((a, b) => a.size - b.size);
@@ -166,7 +180,7 @@ export default function Page() {
     <section
       style={{
         position: "relative",
-        width: "100vw",
+        width: "100%",
         height: "100vh",
         overflow: "hidden",
       }}
