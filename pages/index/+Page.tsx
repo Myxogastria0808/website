@@ -1,11 +1,14 @@
 import { useEffect, useRef } from "react";
 
-const MIN_SIZE = 10; // Minimum size of a drop (farthest drops)
-const MAX_SIZE = 50; // Maximum size of a drop (closest drops)
+const MIN_SIZE = 8; // Minimum size of a drop (farthest drops)
+const MAX_SIZE = 44; // Maximum size of a drop (closest drops)
 const DROP_COUNT = 30; // Total number of drops to animate
 const TARGET_FPS = 60; // Target frames per second for the animation
-const MIN_SPEED = 1.2; // Speed of the smallest (farthest) drops (px/frame)
-const MAX_SPEED = 6; // Speed of the largest (closest) drops (px/frame)
+const MIN_SPEED = 0.4; // Speed of the smallest (farthest) drops (px/frame) — slow for gentle rain feel
+const MAX_SPEED = 2.2; // Speed of the largest (closest) drops (px/frame)
+
+// Background color — warm off-white like Japanese washi paper
+const BG = "247, 245, 242";
 
 type Drop = {
   x: number;
@@ -13,16 +16,32 @@ type Drop = {
   size: number;
   opacity: number;
   speed: number;
+  groundY: number; // y position where the drop hits the ground and resets
+  // Small (far) drops have a lower groundY — they disappear earlier due to perspective.
+  // Large (near) drops reach the full bottom of the screen.
 };
 
-// depth function: Calculates the opacity and speed of a drop based on its size to create a sense of depth.
-function depth(size: number): { opacity: number; speed: number } {
+type Ripple = {
+  x: number;
+  y: number; // always at the drop's groundY
+  r: number; // current radius (grows over time)
+  alpha: number; // current opacity (fades over time)
+  expandSpeed: number; // px/frame — larger for near drops, smaller for far drops
+};
+
+// depth function: Calculates the opacity, speed and groundFraction of a drop based on its size.
+// groundFraction is the fraction of canvas height where the drop hits the ground.
+//   t=0 (smallest/farthest): groundFraction=0.68 — disappears at 68% screen height
+//   t=1 (largest/nearest):   groundFraction=1.00 — falls all the way to the bottom
+function depth(size: number): { opacity: number; speed: number; groundFraction: number } {
   const t = (size - MIN_SIZE) / (MAX_SIZE - MIN_SIZE); // Normalize size to a 0-1 range
   return {
     // Opacity ranges from 0.06 (for smallest drops) to 1.0 (for largest drops), with a non-linear scaling for better visual effect.
     opacity: 0.06 + 0.94 * Math.pow(t, 0.75),
     // Speed ranges from MIN_SPEED (for smallest drops) to MAX_SPEED (for largest drops), with a non-linear scaling to make larger drops fall faster.
     speed: MIN_SPEED + (MAX_SPEED - MIN_SPEED) * Math.pow(t, 0.9),
+    // Ground position: far drops dissolve before the bottom, near drops reach the floor.
+    groundFraction: 0.85 + 0.15 * t,
   };
 }
 
@@ -30,19 +49,21 @@ function depth(size: number): { opacity: number; speed: number } {
 // width/height are in CSS pixels (not DPR-scaled backing store pixels).
 function makeDrop(width: number, height: number): Drop {
   const size = MIN_SIZE + Math.random() * (MAX_SIZE - MIN_SIZE);
-  const { opacity, speed } = depth(size);
+  const { opacity, speed, groundFraction } = depth(size);
   return {
     x: Math.random() * width,
     y: -size - Math.random() * height, // Start above the canvas with a random offset to create a staggered entry effect
     size,
     opacity,
     speed,
+    groundY: height * groundFraction,
   };
 }
 
 export default function Page() {
   const canvasRef = useRef<HTMLCanvasElement>(null); // Get canvas element reference
   const drops = useRef<Drop[]>([]);
+  const ripples = useRef<Ripple[]>([]);
 
   useEffect(() => {
     const canvas = canvasRef.current; // Access the canvas element
@@ -88,6 +109,20 @@ export default function Page() {
     let cssW = canvas.offsetWidth;
     let cssH = canvas.offsetHeight;
 
+    // Build the atmosphere gradient drawn over the lambdas each frame.
+    // Top: fades to background color so lambdas seem to emerge from air (not hard-edged at top).
+    // Bottom: very gentle shadow suggesting ground without being literal.
+    // Must be recreated on resize since gradient coordinates are in CSS pixel space.
+    const buildFog = () => {
+      const grad = ctx.createLinearGradient(0, 0, 0, cssH);
+      grad.addColorStop(0, `rgba(${BG}, 0.92)`); // sky — lambdas fade in as they descend
+      grad.addColorStop(0.2, `rgba(${BG}, 0.1)`); // almost clear
+      grad.addColorStop(0.7, `rgba(${BG}, 0)`); // fully clear
+      grad.addColorStop(1, `rgba(${BG}, 0.35)`); // subtle ground shadow
+      return grad;
+    };
+    let fogGradient = buildFog();
+
     const draw = (timestamp: number) => {
       // Initialize lastTime from the very first RAF timestamp to avoid a large initial delta.
       if (lastTime < 0) {
@@ -105,12 +140,23 @@ export default function Page() {
       const elapsed = Math.min(timestamp - lastTime, frameInterval * 3);
       lastTime = timestamp;
 
-      // Step 1: Update positions and reset drops that go off-screen
+      // Step 1: Update positions and reset drops that reach their ground level
       let needsSort = false;
       for (const drop of drops.current) {
         drop.y += drop.speed * (elapsed / frameInterval); // Scale by elapsed time to keep speed consistent across FPS variation
         // If the drop has moved off the bottom of the screen, reset it to the top with new properties
-        if (drop.y > cssH + drop.size) {
+        if (drop.y > drop.groundY) {
+          // Spawn a ripple at the impact point before resetting the drop
+          const t = (drop.size - MIN_SIZE) / (MAX_SIZE - MIN_SIZE);
+          ripples.current.push({
+            x: drop.x + drop.size * 0.3, // approximate horizontal center of the λ glyph
+            y: drop.groundY,
+            r: 0,
+            // Opacity and expansion scale with depth: near drops make bigger, more visible ripples
+            alpha: 0.12 + 0.3 * t,
+            expandSpeed: 0.8 + 2.2 * t,
+          });
+
           // Create a new drop with random properties
           const next = makeDrop(cssW, cssH);
           // Set the reset drop's properties to the new drop's properties
@@ -119,6 +165,7 @@ export default function Page() {
           drop.size = next.size;
           drop.opacity = next.opacity;
           drop.speed = next.speed;
+          drop.groundY = next.groundY;
           needsSort = true;
         }
       }
@@ -134,9 +181,31 @@ export default function Page() {
       for (const drop of drops.current) {
         // Set font size based on drop size and use monospace for consistent character width
         ctx.font = `${drop.size}px monospace`;
-        ctx.fillStyle = `rgba(0,0,0,${drop.opacity.toFixed(3)})`;
+        // Sumi ink: warm near-black, depth expressed through opacity alone
+        ctx.fillStyle = `rgba(18,16,14,${drop.opacity.toFixed(3)})`;
         ctx.fillText("λ", drop.x, drop.y);
       }
+
+      // Step 4: Draw and update ripples (expand + fade)
+      // Drawn before the fog overlay so the atmosphere gradient naturally softens ground-level ripples.
+      const alive: Ripple[] = [];
+      for (const rip of ripples.current) {
+        if (rip.alpha < 0.005) continue; // Skip fully faded ripples
+        ctx.beginPath();
+        // Flattened ellipse to suggest the ripple is spreading on a horizontal surface (perspective)
+        ctx.ellipse(rip.x, rip.y, rip.r, rip.r * 0.18, 0, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(18,16,14,${rip.alpha.toFixed(3)})`;
+        ctx.lineWidth = 0.7;
+        ctx.stroke();
+        rip.r += rip.expandSpeed * (elapsed / frameInterval);
+        rip.alpha *= 0.92;
+        alive.push(rip);
+      }
+      ripples.current = alive;
+
+      // Step 5: Overlay atmosphere gradient — lambdas emerge from sky, dissolve into ground
+      ctx.fillStyle = fogGradient;
+      ctx.fillRect(0, 0, cssW, cssH);
 
       // Request the next animation frame to continue the loop
       rafId = requestAnimationFrame(draw);
@@ -157,6 +226,9 @@ export default function Page() {
         // Update cached CSS pixel dimensions after resize
         cssW = canvas.offsetWidth;
         cssH = canvas.offsetHeight;
+        // Rebuild fog gradient for new canvas dimensions
+        fogGradient = buildFog();
+        ripples.current = [];
         // Reinitialize drops with new canvas dimensions and sort them again
         drops.current = Array.from({ length: DROP_COUNT }, () => makeDrop(cssW, cssH));
         // Sort drops again to maintain correct drawing order after resizing, as sizes may have changed due to new canvas dimensions
@@ -181,6 +253,7 @@ export default function Page() {
         width: "100%",
         height: "100vh",
         overflow: "hidden",
+        background: `rgb(${BG})`,
       }}
     >
       <canvas
@@ -206,9 +279,8 @@ export default function Page() {
           height: "100%",
         }}
       >
-        <h1>Hello, World's Observer</h1>
+        <h1>Hello</h1>
       </div>
     </section>
   );
 }
-
