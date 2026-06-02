@@ -27,6 +27,7 @@ function depth(size: number): { opacity: number; speed: number } {
 }
 
 // makeDrop function: Creates a new drop with random properties based on the given width and height of the canvas.
+// width/height are in CSS pixels (not DPR-scaled backing store pixels).
 function makeDrop(width: number, height: number): Drop {
   const size = MIN_SIZE + Math.random() * (MAX_SIZE - MIN_SIZE);
   const { opacity, speed } = depth(size);
@@ -47,24 +48,37 @@ export default function Page() {
     const canvas = canvasRef.current; // Access the canvas element
     if (!canvas) return; // Guard against null reference
 
-    // Set canvas size to match its displayed size
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
+    const dpr = window.devicePixelRatio || 1;
+
+    // Scale the backing store by DPR to avoid blur on high-DPI screens.
+    // CSS size (offsetWidth/Height) stays unchanged; only the internal resolution is multiplied.
+    const setCanvasSize = () => {
+      canvas.width = Math.round(canvas.offsetWidth * dpr);
+      canvas.height = Math.round(canvas.offsetHeight * dpr);
+    };
+    setCanvasSize();
 
     // Initialize drops with random properties based on the canvas dimensions
-    drops.current = Array.from({ length: DROP_COUNT }, () => makeDrop(canvas.width, canvas.height));
+    // Use CSS pixel dimensions (offsetWidth/Height) so drop coordinates stay in CSS pixel space.
+    drops.current = Array.from({ length: DROP_COUNT }, () =>
+      makeDrop(canvas.offsetWidth, canvas.offsetHeight),
+    );
     // Sort drops by size to ensure correct drawing order (smaller drops in the background, larger drops in the foreground)
     drops.current.sort((a, b) => a.size - b.size);
 
     // Get 2D drawing context
     const ctx = canvas.getContext("2d");
+    if (!ctx) return; // Guard against null context
+
+    // Scale the context by DPR once so all draw calls can use CSS pixel coordinates.
+    // Resetting canvas.width/height (on resize) clears this transform, so it must be re-applied then too.
+    ctx.scale(dpr, dpr);
+
     let rafId: number;
     let lastTime = 0;
     const frameInterval = 1000 / TARGET_FPS;
 
     const draw = (timestamp: number) => {
-      if (!ctx) return; // Guard against null context
-
       // Frame rate control: Only update and redraw if enough time has passed since the last frame to maintain the target FPS.
       if (timestamp - lastTime < frameInterval) {
         rafId = requestAnimationFrame(draw);
@@ -72,14 +86,18 @@ export default function Page() {
       }
       lastTime = timestamp;
 
+      // CSS pixel dimensions used for boundary checks and clearRect (context is already DPR-scaled)
+      const cssW = canvas.offsetWidth;
+      const cssH = canvas.offsetHeight;
+
       // Step 1: Update positions and reset drops that go off-screen
       let needsSort = false;
       for (const drop of drops.current) {
         drop.y += drop.speed; // Move drop down by its speed
         // If the drop has moved off the bottom of the screen, reset it to the top with new properties
-        if (drop.y > canvas.height + drop.size) {
+        if (drop.y > cssH + drop.size) {
           // Create a new drop with random properties
-          const next = makeDrop(canvas.width, canvas.height);
+          const next = makeDrop(cssW, cssH);
           // Set the reset drop's properties to the new drop's properties
           drop.x = next.x;
           drop.y = next.y;
@@ -97,7 +115,7 @@ export default function Page() {
       if (needsSort) drops.current.sort((a, b) => a.size - b.size);
 
       // Step 3: Clear the canvas and redraw all drops in sorted order
-      ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the entire canvas
+      ctx.clearRect(0, 0, cssW, cssH); // Clear the entire canvas
       for (const drop of drops.current) {
         // Set font size based on drop size and use monospace for consistent character width
         ctx.font = `${drop.size}px monospace`;
@@ -112,17 +130,17 @@ export default function Page() {
     // Start the animation loop
     rafId = requestAnimationFrame(draw);
 
-    let resizeTimer: ReturnType<typeof setTimeout>;
+    let resizeTimer: ReturnType<typeof setTimeout> | undefined = undefined;
     const handleResize = () => {
       clearTimeout(resizeTimer);
       // Debounce the resize event to avoid excessive calculations during rapid resizing
       resizeTimer = setTimeout(() => {
-        // Set canvas size to match its displayed size after resizing
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
+        setCanvasSize();
+        // Re-apply DPR scale after canvas resize resets the context transform
+        ctx.scale(dpr, dpr);
         // Reinitialize drops with new canvas dimensions and sort them again
         drops.current = Array.from({ length: DROP_COUNT }, () =>
-          makeDrop(canvas.width, canvas.height),
+          makeDrop(canvas.offsetWidth, canvas.offsetHeight),
         );
         // Sort drops again to maintain correct drawing order after resizing, as sizes may have changed due to new canvas dimensions
         drops.current.sort((a, b) => a.size - b.size);
@@ -150,6 +168,7 @@ export default function Page() {
     >
       <canvas
         ref={canvasRef}
+        aria-hidden="true"
         style={{
           position: "absolute",
           top: 0,
@@ -157,6 +176,7 @@ export default function Page() {
           width: "100%",
           height: "100%",
           display: "block",
+          pointerEvents: "none",
         }}
       />
       <div
@@ -174,4 +194,3 @@ export default function Page() {
     </section>
   );
 }
-
