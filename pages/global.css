@@ -2,10 +2,85 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+*::selection {
+  background-color: #cfcbff;
 }
 
 body {
-  margin: 0;
   overflow-x: hidden;
   background: #f7f5f2;
 }
+
+/*** Fonts ***/
+/* Megrim */
+.font-megrim {
+  font-family: "Megrim", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Wavefont */
+/* font-weight: Use a value from 4 to 1000 */
+.font-wavefont {
+  font-family: "Wavefont", system-ui;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings:
+    "ROND" 100,
+    "YELA" -100;
+}
+
+/* Noto Sans */
+/* font-weight: Use a value from 100 to 900 */
+.font-noto-sans {
+  font-family: "Noto Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+
+/*** Font Sizes ***/
+.text-xs {
+  font-size: calc(1rem * 8 / 10);
+}
+
+.text-sm {
+  font-size: calc(1rem * 8 / 9);
+}
+
+.text-base {
+  font-size: calc(1rem * 8 / 8);
+}
+
+.text-lg {
+  font-size: calc(1rem * 8 / 7);
+}
+
+.text-xl {
+  font-size: calc(1rem * 8 / 6);
+}
+
+.text-2xl {
+  font-size: calc(1rem * 8 / 5);
+}
+
+.text-3xl {
+  font-size: calc(1rem * 8 / 4);
+}
+
+.text-4xl {
+  font-size: calc(1rem * 8 / 3);
+}
+
+.text-5xl {
+  font-size: calc(1rem * 8 / 2);
+}
+
+.text-6xl {
+  font-size: calc(1rem * 8 / 1);
+}
+

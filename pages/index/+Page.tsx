@@ -7,8 +7,11 @@ const TARGET_FPS = 60; // Target frames per second for the animation
 const MIN_SPEED = 0.4; // Speed of the smallest (farthest) drops (px/frame) — slow for gentle rain feel
 const MAX_SPEED = 2.2; // Speed of the largest (closest) drops (px/frame)
 
-// Background color — warm off-white like Japanese washi paper
+// Background color — warm off-white
 const BG = "247, 245, 242";
+// Ink colors (RGB strings) used for both drops and their ripples
+const INK_DEFAULT = "18, 16, 14"; // warm near-black
+const INK_ACCENT = "30, 80, 160"; // prussian blue accent (~10% of drops)
 
 type Drop = {
   x: number;
@@ -19,6 +22,7 @@ type Drop = {
   groundY: number; // y position where the drop hits the ground and resets
   // Small (far) drops have a lower groundY — they disappear earlier due to perspective.
   // Large (near) drops reach the full bottom of the screen.
+  ink: string; // RGB string — shared with the ripple this drop spawns
 };
 
 type Ripple = {
@@ -27,6 +31,7 @@ type Ripple = {
   r: number; // current radius (grows over time)
   alpha: number; // current opacity (fades over time)
   expandSpeed: number; // px/frame — larger for near drops, smaller for far drops
+  ink: string; // RGB string — matches the drop that spawned this ripple
 };
 
 // depth function: Calculates the opacity, speed and groundFraction of a drop based on its size.
@@ -41,7 +46,7 @@ function depth(size: number): { opacity: number; speed: number; groundFraction: 
     // Speed ranges from MIN_SPEED (for smallest drops) to MAX_SPEED (for largest drops), with a non-linear scaling to make larger drops fall faster.
     speed: MIN_SPEED + (MAX_SPEED - MIN_SPEED) * Math.pow(t, 0.9),
     // Ground position: far drops dissolve before the bottom, near drops reach the floor.
-    groundFraction: 0.85 + 0.15 * t,
+    groundFraction: 0.78 + 0.15 * t,
   };
 }
 
@@ -57,6 +62,7 @@ function makeDrop(width: number, height: number): Drop {
     opacity,
     speed,
     groundY: height * groundFraction,
+    ink: Math.random() < 0.1 ? INK_ACCENT : INK_DEFAULT, // 10% chance of deep blue accent
   };
 }
 
@@ -155,6 +161,7 @@ export default function Page() {
             // Opacity and expansion scale with depth: near drops make bigger, more visible ripples
             alpha: 0.12 + 0.3 * t,
             expandSpeed: 0.8 + 2.2 * t,
+            ink: drop.ink, // ripple inherits the drop's color
           });
 
           // Create a new drop with random properties
@@ -166,6 +173,7 @@ export default function Page() {
           drop.opacity = next.opacity;
           drop.speed = next.speed;
           drop.groundY = next.groundY;
+          drop.ink = next.ink;
           needsSort = true;
         }
       }
@@ -181,8 +189,7 @@ export default function Page() {
       for (const drop of drops.current) {
         // Set font size based on drop size and use monospace for consistent character width
         ctx.font = `${drop.size}px monospace`;
-        // Sumi ink: warm near-black, depth expressed through opacity alone
-        ctx.fillStyle = `rgba(18,16,14,${drop.opacity.toFixed(3)})`;
+        ctx.fillStyle = `rgba(${drop.ink},${drop.opacity.toFixed(3)})`;
         ctx.fillText("λ", drop.x, drop.y);
       }
 
@@ -194,7 +201,7 @@ export default function Page() {
         ctx.beginPath();
         // Flattened ellipse to suggest the ripple is spreading on a horizontal surface (perspective)
         ctx.ellipse(rip.x, rip.y, rip.r, rip.r * 0.18, 0, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(18,16,14,${rip.alpha.toFixed(3)})`;
+        ctx.strokeStyle = `rgba(${rip.ink},${rip.alpha.toFixed(3)})`;
         ctx.lineWidth = 0.7;
         ctx.stroke();
         rip.r += rip.expandSpeed * (elapsed / frameInterval);
@@ -214,26 +221,21 @@ export default function Page() {
     // Start the animation loop
     rafId = requestAnimationFrame(draw);
 
-    let resizeTimer: ReturnType<typeof setTimeout> | undefined = undefined;
     const handleResize = () => {
-      clearTimeout(resizeTimer);
-      // Debounce the resize event to avoid excessive calculations during rapid resizing
-      resizeTimer = setTimeout(() => {
-        // Re-apply DPR scale after canvas resize resets the context transform.
-        // setCanvasSize() returns the current DPR (may differ if monitor changed).
-        const newDpr = setCanvasSize();
-        ctx.scale(newDpr, newDpr);
-        // Update cached CSS pixel dimensions after resize
-        cssW = canvas.offsetWidth;
-        cssH = canvas.offsetHeight;
-        // Rebuild fog gradient for new canvas dimensions
-        fogGradient = buildFog();
-        ripples.current = [];
-        // Reinitialize drops with new canvas dimensions and sort them again
-        drops.current = Array.from({ length: DROP_COUNT }, () => makeDrop(cssW, cssH));
-        // Sort drops again to maintain correct drawing order after resizing, as sizes may have changed due to new canvas dimensions
-        drops.current.sort((a, b) => a.size - b.size);
-      }, 150);
+      // Re-apply DPR scale after canvas resize resets the context transform.
+      // setCanvasSize() returns the current DPR (may differ if monitor changed).
+      const newDpr = setCanvasSize();
+      ctx.scale(newDpr, newDpr);
+      // Update cached CSS pixel dimensions after resize
+      cssW = canvas.offsetWidth;
+      cssH = canvas.offsetHeight;
+      // Rebuild fog gradient for new canvas dimensions
+      fogGradient = buildFog();
+      ripples.current = [];
+      // Reinitialize drops with new canvas dimensions and sort them again
+      drops.current = Array.from({ length: DROP_COUNT }, () => makeDrop(cssW, cssH));
+      // Sort drops again to maintain correct drawing order after resizing, as sizes may have changed due to new canvas dimensions
+      drops.current.sort((a, b) => a.size - b.size);
     };
     // Add event listener for window resize to handle canvas resizing and drop reinitialization
     window.addEventListener("resize", handleResize);
@@ -242,7 +244,6 @@ export default function Page() {
     return () => {
       cancelAnimationFrame(rafId);
       window.removeEventListener("resize", handleResize);
-      clearTimeout(resizeTimer);
     };
   }, []);
 
@@ -264,7 +265,7 @@ export default function Page() {
           top: 0,
           left: 0,
           width: "100%",
-          height: "100%",
+          height: "100lvh",
           display: "block",
           pointerEvents: "none",
         }}
@@ -279,8 +280,12 @@ export default function Page() {
           height: "100%",
         }}
       >
-        <h1>Hello</h1>
+        <div>
+          <h1 className="font-megrim text-4xl">Hello, unknown observer...</h1>
+          <h2 className="font-wavefont text-3xl">Hello, unknown observer...</h2>
+        </div>
       </div>
     </section>
   );
 }
+
