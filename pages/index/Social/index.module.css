@@ -1,0 +1,48 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 0 1.5rem;
+}
+
+.group {
+}
+
+.label {
+  font-size: var(--fs-10);
+  color: var(--color-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.email {
+  font-size: var(--fs-7);
+  color: var(--color-primary);
+}
+
+.icons {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.iconLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-secondary);
+  color: var(--color-primary);
+  text-decoration: none;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+
+.iconLink:hover {
+  background-color: var(--color-secondary);
+  color: var(--color-background);
+}
+
+

@@ -1,0 +1,108 @@
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 0 1.5rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 360px;
+  max-width: 100%;
+  padding: 1.5rem;
+  border: 1.5px solid var(--color-secondary);
+  border-radius: 0.5rem;
+}
+
+.cardName {
+  font-family: "Megrim", system-ui;
+  font-weight: 400;
+  font-size: var(--fs-7);
+  color: var(--color-primary);
+}
+
+.cardDesc {
+  font-size: var(--fs-9);
+  color: var(--color-primary);
+  line-height: 1.6;
+  overflow-wrap: break-word;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  font-size: var(--fs-10);
+  color: var(--color-secondary);
+  border: 1px solid var(--color-secondary);
+  border-radius: 99rem;
+  padding: 0.125rem 0.625rem;
+}
+
+.links {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: var(--fs-10);
+  color: var(--color-primary);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-secondary);
+  padding-bottom: 0.125rem;
+  transition:
+    color 0.2s,
+    border-color 0.2s;
+}
+
+.link:hover {
+  color: var(--color-secondary);
+  border-color: transparent;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 2rem 1.5rem 0;
+}
+
+.viewAll {
+  font-family: "Megrim", system-ui;
+  font-weight: 400;
+  font-size: var(--fs-7);
+  color: var(--color-primary);
+  text-decoration: none;
+  border-bottom: 1.5px solid var(--color-secondary);
+  padding-bottom: 0.125rem;
+  transition:
+    color 0.2s,
+    border-color 0.2s;
+}
+
+.viewAll:hover {
+  color: var(--color-secondary);
+  border-color: transparent;
+}
+
+@media (--bp-lg) {
+  .card {
+    width: 340px;
+  }
+}
+
+@media (--bp-md) {
+  .card {
+    width: 300px;
+  }
+}
+

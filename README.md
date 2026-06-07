@@ -128,17 +128,16 @@ reason = unable to get local issuer certificate
 
 **解決策**
 
-`flake.nix` の `shellHook` に `NODE_EXTRA_CA_CERTS` を追加する。
+`flake.nix` の `packages` に `cacert` を追加し、`shellHook` で `NODE_EXTRA_CA_CERTS` を設定する。
 
 ```nix
 devShells.default = pkgs.mkShell {
   packages = with pkgs; [
     nodejs
     bun
-    cacert
+    cacert  # setup hook が NIX_SSL_CERT_FILE を自動設定する
   ];
   shellHook = ''
-    export NIX_SSL_CERT_FILE="${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
     export NODE_EXTRA_CA_CERTS="$NIX_SSL_CERT_FILE"
   '';
 };
@@ -148,7 +147,7 @@ devShells.default = pkgs.mkShell {
 
 **補足**
 
+- `cacert` nixpkgs パッケージは自身の setup hook により `NIX_SSL_CERT_FILE` を自動的に設定する。shellHook でこの変数をハードコードする必要はない。
+- `shellHook` ではその `NIX_SSL_CERT_FILE` を `NODE_EXTRA_CA_CERTS` に転記するだけでよい。
 - `SSL_CERT_FILE` は `workerd` には効果がないため不要。
-- `NIX_SSL_CERT_FILE` は nixpkgs でラップされた各種ツール（git 等）が参照するため設定しておく。
-- `${pkgs.cacert}` のパスは `direnv reload` 時に nix が cacert をダウンロードすることで有効になる。
 

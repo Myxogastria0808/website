@@ -1,10 +1,332 @@
+@custom-media --bp-xs-up (min-width: 21.875rem);
+@custom-media --bp-xs-down (max-width: 21.8125rem);
+@custom-media --bp-sm (max-width: 30rem);
+@custom-media --bp-md (max-width: 40rem);
+@custom-media --bp-lg (max-width: 50rem);
+
+:root {
+  --color-primary: #0288a9;
+  --color-secondary: #8cb4ce;
+  --color-accent: #cfcbff;
+  --color-background: #f7f5f2;
+  --color-pointer: #f4834a;
+
+  /* Harmonic series: base × 10 ÷ n */
+
+  /* rem — matches at any viewport */
+  --fs-1: calc(1rem * 10 / 1);
+  --fs-2: calc(1rem * 10 / 2);
+  --fs-3: calc(1rem * 10 / 3);
+  --fs-4: calc(1rem * 10 / 4);
+  --fs-5: calc(1rem * 10 / 5);
+  --fs-6: calc(1rem * 10 / 6);
+  --fs-7: calc(1rem * 10 / 7);
+  --fs-8: calc(1rem * 10 / 8);
+  --fs-9: calc(1rem * 10 / 9);
+  --fs-10: calc(1rem * 10 / 10);
+
+  /* vw — matches --fs-{n} at viewport 100rem (1600px) */
+  --fs-vw-1: calc(1vw * 10 / 1);
+  --fs-vw-2: calc(1vw * 10 / 2);
+  --fs-vw-3: calc(1vw * 10 / 3);
+  --fs-vw-4: calc(1vw * 10 / 4);
+  --fs-vw-5: calc(1vw * 10 / 5);
+  --fs-vw-6: calc(1vw * 10 / 6);
+  --fs-vw-7: calc(1vw * 10 / 7);
+  --fs-vw-8: calc(1vw * 10 / 8);
+  --fs-vw-9: calc(1vw * 10 / 9);
+  --fs-vw-10: calc(1vw * 10 / 10);
+
+  /* vw2 — matches --fs-{n} at viewport 50rem (800px) */
+  --fs-vw2-1: calc(2vw * 10 / 1);
+  --fs-vw2-2: calc(2vw * 10 / 2);
+  --fs-vw2-3: calc(2vw * 10 / 3);
+  --fs-vw2-4: calc(2vw * 10 / 4);
+  --fs-vw2-5: calc(2vw * 10 / 5);
+  --fs-vw2-6: calc(2vw * 10 / 6);
+  --fs-vw2-7: calc(2vw * 10 / 7);
+  --fs-vw2-8: calc(2vw * 10 / 8);
+  --fs-vw2-9: calc(2vw * 10 / 9);
+  --fs-vw2-10: calc(2vw * 10 / 10);
+}
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+*::selection {
+  background-color: var(--color-accent);
 }
 
 body {
-  margin: 0;
   overflow-x: hidden;
+  background: var(--color-background);
+  font-family: "Noto Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-variation-settings: "wdth" 100;
 }
+
+/* `cursor: none` and the custom cursor elements are gated behind `body.has-custom-cursor`,
+   which JS adds once the cursor is successfully initialized. This ensures:
+   - If JS is disabled/fails → native cursor is preserved.
+   - Touch-only devices (`pointer: coarse`) → JS never adds the class.
+   - Hybrid devices → class is removed on touchstart, restored on mousemove.
+   `@media (pointer: fine)` further guards so the rule is only parsed on pointer devices. */
+@media (pointer: fine) {
+  /* Apply to `*` directly rather than inheriting from `body`, so browser UA styles
+     like `a { cursor: pointer }` cannot override it via the normal cascade. */
+  body.has-custom-cursor * {
+    cursor: none !important;
+  }
+
+  body.has-custom-cursor .cursor-dot,
+  body.has-custom-cursor .cursor-ring {
+    display: block;
+  }
+}
+
+/* CSS custom property used as a pointer-state signal for JS.
+   Unlike `cursor`, custom properties are NOT affected by `cursor: none !important`,
+   so `getComputedStyle(el).getPropertyValue('--is-pointer')` reliably returns "1"
+   on interactive elements even after the global cursor override is applied.
+   We mark the same set of elements the browser would give `cursor: pointer`. */
+a,
+button,
+label,
+select,
+summary,
+[role="button"],
+[tabindex]:not([tabindex="-1"]) {
+  --is-pointer: 1;
+}
+
+/* Hidden by default so touch-only devices never flash the elements even for a frame.
+   Shown via `body.has-custom-cursor` + `@media (pointer: fine)` above.
+   JS can also override with inline `display: none / ""` for hybrid switching. */
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: var(--color-primary);
+  pointer-events: none;
+  z-index: 9999;
+  display: none;
+  /* Transition only shape/color properties — never `transform`, which is updated
+     every frame by JS and must not be delayed by a transition curve. */
+  transition: clip-path 0.15s ease, background-color 0.15s ease, width 0.15s ease, height 0.15s ease, border-radius 0.15s ease;
+}
+
+/* When hovering a clickable element the dot morphs into an upward-pointing triangle
+   and takes on the pointer color. `clip-path` overrides `border-radius` visually. */
+.cursor-dot--pointer {
+  background: var(--color-pointer);
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 0;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-primary);
+  pointer-events: none;
+  z-index: 9998;
+  display: none;
+  transition: border-color 0.15s ease;
+}
+
+.cursor-ring--pointer {
+  border-color: var(--color-pointer);
+}
+
+/* "Click!" label — sits below the ring, hidden by default, fades in on pointer elements. */
+.cursor-click-label {
+  position: absolute;
+  top: calc(100% + 0.25rem);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Megrim", system-ui;
+  font-size: var(--fs-10);
+  color: var(--color-pointer);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  pointer-events: none;
+}
+
+.cursor-click-label--visible {
+  opacity: 1;
+}
+
+
+/*** Font Sets ***/
+.title,
+.section-title {
+  font-family: "Megrim", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  color: var(--color-primary);
+}
+
+@media (--bp-xs-up) {
+  .title,
+  .section-title {
+    font-size: var(--fs-3);
+  }
+}
+
+@media (--bp-xs-down) {
+  .title,
+  .section-title {
+    font-size: var(--fs-4);
+  }
+}
+
+.section-title {
+  text-align: center;
+  margin: 12.5rem 0 6.25rem 0;
+}
+
+.subtitle {
+  font-family: "Wavefont", system-ui;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings:
+    "ROND" 100,
+    "YELA" -100;
+  font-size: var(--fs-2);
+  color: var(--color-secondary);
+}
+
+/*** Fonts ***/
+.font-megrim {
+  font-family: "Megrim", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.font-wavefont {
+  font-family: "Wavefont", system-ui;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings:
+    "ROND" 100,
+    "YELA" -100;
+}
+
+.font-noto-sans {
+  font-family: "Noto Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+
+/*** Font Sizes ***/
+/* rem */
+.text-xs {
+  font-size: var(--fs-10);
+}
+.text-sm {
+  font-size: var(--fs-9);
+}
+.text-base {
+  font-size: var(--fs-8);
+}
+.text-lg {
+  font-size: var(--fs-7);
+}
+.text-xl {
+  font-size: var(--fs-6);
+}
+.text-2xl {
+  font-size: var(--fs-5);
+}
+.text-3xl {
+  font-size: var(--fs-4);
+}
+.text-4xl {
+  font-size: var(--fs-3);
+}
+.text-5xl {
+  font-size: var(--fs-2);
+}
+.text-6xl {
+  font-size: var(--fs-1);
+}
+
+/* vw */
+.text-vw-1 {
+  font-size: var(--fs-vw-1);
+}
+.text-vw-2 {
+  font-size: var(--fs-vw-2);
+}
+.text-vw-3 {
+  font-size: var(--fs-vw-3);
+}
+.text-vw-4 {
+  font-size: var(--fs-vw-4);
+}
+.text-vw-5 {
+  font-size: var(--fs-vw-5);
+}
+.text-vw-6 {
+  font-size: var(--fs-vw-6);
+}
+.text-vw-7 {
+  font-size: var(--fs-vw-7);
+}
+.text-vw-8 {
+  font-size: var(--fs-vw-8);
+}
+.text-vw-9 {
+  font-size: var(--fs-vw-9);
+}
+.text-vw-10 {
+  font-size: var(--fs-vw-10);
+}
+
+/* vw2 */
+.text-vw2-1 {
+  font-size: var(--fs-vw2-1);
+}
+.text-vw2-2 {
+  font-size: var(--fs-vw2-2);
+}
+.text-vw2-3 {
+  font-size: var(--fs-vw2-3);
+}
+.text-vw2-4 {
+  font-size: var(--fs-vw2-4);
+}
+.text-vw2-5 {
+  font-size: var(--fs-vw2-5);
+}
+.text-vw2-6 {
+  font-size: var(--fs-vw2-6);
+}
+.text-vw2-7 {
+  font-size: var(--fs-vw2-7);
+}
+.text-vw2-8 {
+  font-size: var(--fs-vw2-8);
+}
+.text-vw2-9 {
+  font-size: var(--fs-vw2-9);
+}
+.text-vw2-10 {
+  font-size: var(--fs-vw2-10);
+}
+

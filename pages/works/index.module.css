@@ -1,0 +1,56 @@
+.container {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1200px;
+  min-height: 80vh;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 4rem 1.5rem 0;
+}
+
+.back {
+  font-family: "Megrim", system-ui;
+  font-weight: 400;
+  font-size: var(--fs-7);
+  color: var(--color-secondary);
+  text-decoration: none;
+  width: max-content;
+  border-bottom: 1.5px solid transparent;
+  padding-bottom: 0.125rem;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.back:hover {
+  color: var(--color-primary);
+  border-color: var(--color-secondary);
+}
+
+.searchSection {
+  padding: 0 1.5rem 6rem;
+}
+
+.wip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 4rem 0;
+  border: 1.5px dashed var(--color-secondary);
+  border-radius: 0.5rem;
+}
+
+.wipLabel {
+  font-family: "Megrim", system-ui;
+  font-weight: 400;
+  font-size: var(--fs-5);
+  color: var(--color-secondary);
+}
+
+.wipDesc {
+  font-size: var(--fs-9);
+  color: var(--color-secondary);
+}

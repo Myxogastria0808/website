@@ -1,6 +1,9 @@
 # .gitignore
 .wrangler/
 
+# Local working files
+tmp/
+
 # Nix
 .direnv/
 
