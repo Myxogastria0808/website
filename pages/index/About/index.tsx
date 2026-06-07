@@ -5,7 +5,6 @@ import { useGSAP } from "@gsap/react";
 import Katex from "../../../components/Katex";
 import styles from "./index.module.css";
 
-gsap.registerPlugin(ScrollTrigger);
 
 function Symbol({ tex, mobileTex }: { tex: string; mobileTex: string }) {
   return (
@@ -28,6 +27,7 @@ export default function About() {
   ];
 
   useGSAP(() => {
+    gsap.registerPlugin(ScrollTrigger);
     const targets = [
       { element: blockRefs[0].current, x: -80 },
       { element: blockRefs[1].current, x: 80 },
@@ -63,7 +63,7 @@ export default function About() {
             <p className={styles.label}>Handle name</p>
             <p className={styles.text}>Myxogastria0808</p>
           </div>
-          <Symbol tex="A \xrightarrow{\sim} B" mobileTex="\cong" />
+          <Symbol tex={"A \\xrightarrow{\\sim} B"} mobileTex={"\\cong"} />
         </div>
         <div className={`${styles.entry} ${styles.entryReverse}`}>
           <div ref={blockRefs[1]} className={styles.block}>
@@ -74,14 +74,14 @@ export default function About() {
               College of Information Science
             </p>
           </div>
-          <Symbol tex="me \in T" mobileTex="\in" />
+          <Symbol tex={"me \\in T"} mobileTex={"\\in"} />
         </div>
         <div className={styles.entry}>
           <div ref={blockRefs[2]} className={styles.block}>
             <p className={styles.label}>Interest</p>
             <p className={styles.text}>Category Theory, HoTT, Type Theory, Nix</p>
           </div>
-          <Symbol tex="\lambda x {:} A.\, x" mobileTex="\lambda" />
+          <Symbol tex={"\\lambda x {:} A.\\, x"} mobileTex={"\\lambda"} />
         </div>
       </div>
     </section>

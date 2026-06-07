@@ -14,7 +14,10 @@ const customMediaDefs: Record<string, string> = {
 const injectCustomMedia = {
   postcssPlugin: "inject-custom-media",
   Once(root: Root) {
-    if (!root.toString().includes("--bp-")) return;
+    const src = root.toString();
+    if (!src.includes("--bp-")) return;
+    // Skip files that already define @custom-media --bp-* (e.g. global.css itself).
+    if (src.includes("@custom-media --bp-")) return;
     for (const [name, query] of Object.entries(customMediaDefs).reverse()) {
       root.prepend({ name: "custom-media", params: `${name} ${query}` });
     }

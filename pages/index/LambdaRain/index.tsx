@@ -258,7 +258,7 @@ const LambdaRain = () => {
       <div className={styles.overlay}>
         <div className={styles.textBlock}>
           <h1 className="title">Hello, unknown observer...</h1>
-          <p className="subtitle">Hello, unknown observer...</p>
+          <p aria-hidden="true" className="subtitle">Hello, unknown observer...</p>
         </div>
       </div>
     </header>

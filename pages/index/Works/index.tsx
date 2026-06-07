@@ -6,12 +6,12 @@ import { FaGithub, FaArrowUpRightFromSquare } from "react-icons/fa6";
 import type { Work } from "../../../data/works";
 import styles from "./index.module.css";
 
-gsap.registerPlugin(ScrollTrigger);
 
 export default function Works({ works }: { works: Work[] }) {
   const gridRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
+    gsap.registerPlugin(ScrollTrigger);
     if (!gridRef.current) return;
     const cards = gridRef.current.querySelectorAll(`.${styles.card}`);
     gsap.fromTo(

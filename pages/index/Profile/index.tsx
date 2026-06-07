@@ -4,14 +4,14 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import styles from "./index.module.css";
 
-gsap.registerPlugin(ScrollTrigger);
 
-export default function About() {
+export default function Profile() {
   const frameRef = useRef<HTMLDivElement>(null);
   const wedgeRef = useRef<HTMLDivElement>(null);
   const lambdaRef = useRef<HTMLSpanElement>(null);
 
   useGSAP(() => {
+    gsap.registerPlugin(ScrollTrigger);
     const frame = frameRef.current;
     const wedge = wedgeRef.current;
     const lambda = lambdaRef.current;

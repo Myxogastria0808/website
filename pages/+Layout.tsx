@@ -8,7 +8,6 @@ import "lenis/dist/lenis.css";
 import "katex/dist/katex.min.css";
 import "./global.css";
 
-gsap.registerPlugin(ScrollTrigger);
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   // Lenis and ScrollTrigger integration
@@ -47,9 +46,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     const ring = ringRef.current;
     if (!dot || !ring) return;
 
+    gsap.registerPlugin(ScrollTrigger);
     // Bail out entirely on touch-only devices (`pointer: coarse`).
-    // CSS already hides the elements, but skipping GSAP setup avoids wasted listeners.
+    // Without this class the CSS never hides the native cursor, so non-JS / coarse
+    // pointer devices retain normal browser behaviour.
     if (!window.matchMedia("(pointer: fine)").matches) return;
+    document.body.classList.add("has-custom-cursor");
 
     gsap.set(ring, { xPercent: -50, yPercent: -50 });
     const ringX = gsap.quickTo(ring, "x", { duration: 0.4, ease: "power3" });
@@ -59,9 +61,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       // Resetting inline `display` and `cursor` to "" (empty string) hands control
       // back to the stylesheet — `@media (pointer: fine)` restores `display: block`
       // and `cursor: none` automatically. This avoids hardcoding values in JS.
-      dot.style.display = "";
-      ring.style.display = "";
-      document.body.style.cursor = "";
+      document.body.classList.add("has-custom-cursor");
       dot.style.transform = `translate(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%))`;
       ringX(e.clientX);
       ringY(e.clientY);
@@ -88,9 +88,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       // A touch event means the user switched from mouse/stylus to finger.
       // Override the CSS with inline styles so the cursor disappears immediately,
       // regardless of what the media query says.
-      dot.style.display = "none";
-      ring.style.display = "none";
-      document.body.style.cursor = "auto";
+      document.body.classList.remove("has-custom-cursor");
       if (clickLabelRef.current) clickLabelRef.current.classList.remove("cursor-click-label--visible");
     };
 

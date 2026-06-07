@@ -70,14 +70,22 @@ body {
   font-variation-settings: "wdth" 100;
 }
 
-/* `pointer: fine` matches mouse and stylus — i.e. devices where a cursor makes sense.
-   Touch-only devices report `pointer: coarse` and never match, so they keep the
-   browser default cursor and never see the custom elements. */
+/* `cursor: none` and the custom cursor elements are gated behind `body.has-custom-cursor`,
+   which JS adds once the cursor is successfully initialized. This ensures:
+   - If JS is disabled/fails → native cursor is preserved.
+   - Touch-only devices (`pointer: coarse`) → JS never adds the class.
+   - Hybrid devices → class is removed on touchstart, restored on mousemove.
+   `@media (pointer: fine)` further guards so the rule is only parsed on pointer devices. */
 @media (pointer: fine) {
   /* Apply to `*` directly rather than inheriting from `body`, so browser UA styles
      like `a { cursor: pointer }` cannot override it via the normal cascade. */
-  * {
+  body.has-custom-cursor * {
     cursor: none !important;
+  }
+
+  body.has-custom-cursor .cursor-dot,
+  body.has-custom-cursor .cursor-ring {
+    display: block;
   }
 }
 
@@ -97,7 +105,7 @@ summary,
 }
 
 /* Hidden by default so touch-only devices never flash the elements even for a frame.
-   `@media (pointer: fine)` below overrides this for pointer devices.
+   Shown via `body.has-custom-cursor` + `@media (pointer: fine)` above.
    JS can also override with inline `display: none / ""` for hybrid switching. */
 .cursor-dot {
   position: fixed;
@@ -162,12 +170,6 @@ summary,
   opacity: 1;
 }
 
-@media (pointer: fine) {
-  .cursor-dot,
-  .cursor-ring {
-    display: block;
-  }
-}
 
 /*** Font Sets ***/
 .title,

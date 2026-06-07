@@ -14,6 +14,7 @@ export default function Katex({ tex, displayMode = false, className }: Props) {
       dangerouslySetInnerHTML={{
         __html: katex.renderToString(tex, {
           displayMode,
+          throwOnError: false,
         }),
       }}
     />
