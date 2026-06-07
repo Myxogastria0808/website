@@ -53,17 +53,19 @@ const depth = (size: number): { opacity: number; speed: number; groundFraction: 
 
 // makeDrop function: Creates a new drop with random properties based on the given width and height of the canvas.
 // width/height are in CSS pixels (not DPR-scaled backing store pixels).
-const makeDrop = (width: number, height: number): Drop => {
+// warm=true places the drop at a random y within the visible canvas (warm start on first render).
+const makeDrop = (width: number, height: number, warm = false): Drop => {
   const size = MIN_SIZE + Math.random() * (MAX_SIZE - MIN_SIZE);
   const { opacity, speed, groundFraction } = depth(size);
+  const groundY = height * groundFraction;
   return {
     x: Math.random() * width,
-    y: -size - Math.random() * height, // Start above the canvas with a random offset to create a staggered entry effect
+    y: warm ? Math.random() * groundY : -size - Math.random() * height * 0.3,
     size,
     opacity,
     speed,
-    groundY: height * groundFraction,
-    ink: Math.random() < 0.1 ? INK_ACCENT : INK_DEFAULT, // 10% chance of deep blue accent
+    groundY,
+    ink: Math.random() < 0.1 ? INK_ACCENT : INK_DEFAULT,
   };
 };
 
@@ -92,12 +94,10 @@ const LambdaRain = () => {
     };
     const dpr = setCanvasSize();
 
-    // Initialize drops with random properties based on the canvas dimensions
-    // Use CSS pixel dimensions (offsetWidth/Height) so drop coordinates stay in CSS pixel space.
+    // Warm-start: place drops throughout the visible canvas so rain is visible immediately.
     drops.current = Array.from({ length: DROP_COUNT }, () =>
-      makeDrop(canvas.offsetWidth, canvas.offsetHeight),
+      makeDrop(canvas.offsetWidth, canvas.offsetHeight, true),
     );
-    // Sort drops by size to ensure correct drawing order (smaller drops in the background, larger drops in the foreground)
     drops.current.sort((a, b) => a.size - b.size);
 
     // Get 2D drawing context
@@ -237,9 +237,7 @@ const LambdaRain = () => {
       // Rebuild fog gradient for new canvas dimensions
       fogGradient = buildFog();
       ripples.current = [];
-      // Reinitialize drops with new canvas dimensions and sort them again
-      drops.current = Array.from({ length: DROP_COUNT }, () => makeDrop(cssW, cssH));
-      // Sort drops again to maintain correct drawing order after resizing, as sizes may have changed due to new canvas dimensions
+      drops.current = Array.from({ length: DROP_COUNT }, () => makeDrop(cssW, cssH, true));
       drops.current.sort((a, b) => a.size - b.size);
     };
     // Add event listener for window resize to handle canvas resizing and drop reinitialization

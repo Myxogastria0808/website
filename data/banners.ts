@@ -7,18 +7,28 @@ export type Banner = {
 export const BANNERS: Banner[] = [
   {
     href: "https://mizuame.works",
-    src: "https://mizuame.works/banner/mizuame_banner.png",
+    src: "/banners/mizuame_banner.png",
     alt: "Portfolio of mizuame",
   },
   {
     href: "https://www.ak47.work/",
-    src: "https://www.ak47.work/assets/banner/ak47_banner.png",
-    alt: "Portfolio of ak47",
+    src: "/banners/ak47_banner.png",
+    alt: "Website of ak47",
   },
   {
     href: "https://blog.whatacotton.com/",
-    src: "https://blog.whatacotton.com/whatacotton_banner.png",
+    src: "banners/whatacotton_banner.png",
     alt: "Blog of whatacotton",
+  },
+  {
+    href: "https://www.powerfulfamily.net/",
+    src: "banners/powerfulfamily_banner.png",
+    alt: "Website of masebb",
+  },
+  {
+    href: "https://sites.google.com/view/happy-busy/",
+    src: "banners/happy-busy.png",
+    alt: "Website of happy-busy",
   },
 ];
 

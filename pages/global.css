@@ -120,7 +120,12 @@ summary,
   display: none;
   /* Transition only shape/color properties — never `transform`, which is updated
      every frame by JS and must not be delayed by a transition curve. */
-  transition: clip-path 0.15s ease, background-color 0.15s ease, width 0.15s ease, height 0.15s ease, border-radius 0.15s ease;
+  transition:
+    clip-path 0.15s ease,
+    background-color 0.15s ease,
+    width 0.15s ease,
+    height 0.15s ease,
+    border-radius 0.15s ease;
 }
 
 /* When hovering a clickable element the dot morphs into an upward-pointing triangle
@@ -170,7 +175,6 @@ summary,
   opacity: 1;
 }
 
-
 /*** Font Sets ***/
 .title,
 .section-title {
@@ -196,7 +200,7 @@ summary,
 
 .section-title {
   text-align: center;
-  margin: 12.5rem 0 6.25rem 0;
+  margin: 12.5rem 0 3rem 0;
 }
 
 .subtitle {
