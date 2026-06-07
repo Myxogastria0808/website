@@ -12,6 +12,7 @@ export default function Profile() {
 
   useGSAP(() => {
     if (typeof window === "undefined") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     gsap.registerPlugin(ScrollTrigger);
     const frame = frameRef.current;
     const wedge = wedgeRef.current;

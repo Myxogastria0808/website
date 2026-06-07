@@ -13,7 +13,7 @@ Use Bun for package scripts:
 - `bun run preview` builds and serves the production preview locally.
 - `bun run deploy` builds and deploys to Cloudflare Workers with Wrangler.
 
-No test or lint scripts are currently configured. If adding them, wire them through `package.json` and document the command here.
+`bun run typecheck` runs `tsc --noEmit` and is the current validation baseline. No additional lint or test scripts are configured. If adding them, wire them through `package.json` and document the command here.
 
 ## Coding Style & Naming Conventions
 

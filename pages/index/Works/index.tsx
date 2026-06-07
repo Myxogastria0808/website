@@ -12,6 +12,7 @@ export default function Works({ works, showViewAll = true }: { works: Work[]; sh
 
   useGSAP(() => {
     if (typeof window === "undefined") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     gsap.registerPlugin(ScrollTrigger);
     if (!gridRef.current) return;
     const cards = gridRef.current.querySelectorAll(`.${styles.card}`);

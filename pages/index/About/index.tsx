@@ -29,6 +29,7 @@ export default function About() {
 
   useGSAP(() => {
     if (typeof window === "undefined") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     gsap.registerPlugin(ScrollTrigger);
     const targets = [
       { element: blockRefs[0].current, x: -80 },
