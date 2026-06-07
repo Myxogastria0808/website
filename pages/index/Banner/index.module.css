@@ -1,0 +1,26 @@
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0 1.5rem;
+}
+
+.link {
+  display: block;
+  line-height: 0;
+}
+
+/* Size is controlled by the `width`/`height` HTML attributes on each <img>.
+   image-rendering: pixelated preserves crisp pixels on GIF/PNG badges
+   when the display DPR is not 1:1. */
+.banner {
+  display: block;
+  image-rendering: pixelated;
+  opacity: 0.85;
+  transition: opacity 0.15s ease;
+}
+
+.link:hover .banner {
+  opacity: 1;
+}
