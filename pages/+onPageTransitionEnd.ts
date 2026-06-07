@@ -1,4 +1,6 @@
 export async function onPageTransitionEnd() {
-  console.log("Page transition end");
+  if (import.meta.env.DEV) {
+    console.log("Page transition end");
+  }
   document.body.classList.remove("page-transition");
 }

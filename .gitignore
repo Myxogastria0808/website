@@ -143,7 +143,6 @@ dist
 .pnp.*
 
 # Cloudflare
-.wrangler/
 .dev.vars*
 !.dev.vars.example
 !.env.example

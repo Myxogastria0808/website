@@ -76,6 +76,10 @@ const LambdaRain = () => {
     const canvas = canvasRef.current; // Access the canvas element
     if (!canvas) return; // Guard against null reference
 
+    // Skip animation entirely for users who prefer reduced motion.
+    // The hero header is still rendered; only the canvas loop is omitted.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
     // Scale the backing store by DPR to avoid blur on high-DPI screens.
     // CSS size (offsetWidth/Height) stays unchanged; only the internal resolution is multiplied.
     // DPR is read inside the function so it picks up the current value on every resize

@@ -9,9 +9,10 @@ bun run dev       # Start dev server (Vike + Cloudflare Workers via workerd)
 bun run build     # Production build
 bun run preview   # Build + preview locally
 bun run deploy    # Build + deploy to Cloudflare Workers via wrangler
+bun run typecheck # Type-check without emitting (tsc --noEmit)
 ```
 
-No lint or test commands are configured.
+No lint or test commands are configured beyond `typecheck`.
 
 ## Architecture
 
@@ -47,4 +48,5 @@ When running in this NixOS/nix flake environment:
 - **TLS errors in SSR fetch**: `workerd` doesn't read `SSL_CERT_FILE`. The `flake.nix` shellHook must export `NODE_EXTRA_CA_CERTS` pointing to the nix cacert bundle. Run `direnv reload` after changing `flake.nix`.
 - **`compatibility_date` errors**: The date in `wrangler.jsonc` must not exceed the date encoded in the installed miniflare version (`4.YYYYMMDD.0`).
 - **404 on all pages**: Ensure `pages/+config.ts` has `server: true` to enable the `vike:server-entry` virtual module required by `wrangler.jsonc`.
+- **Wrangler log `EROFS` errors on build**: Wrangler tries to write logs to `~/.config/.wrangler/logs/` which is read-only in this sandbox. Set `WRANGLER_LOG=none` in the shell (or `.envrc`) to suppress the error.
 

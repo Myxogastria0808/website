@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import Katex from "../../../components/Katex";
+import "katex/dist/katex.min.css";
 import styles from "./index.module.css";
 
 
@@ -28,6 +29,7 @@ export default function About() {
 
   useGSAP(() => {
     if (typeof window === "undefined") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     gsap.registerPlugin(ScrollTrigger);
     const targets = [
       { element: blockRefs[0].current, x: -80 },

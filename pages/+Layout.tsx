@@ -5,7 +5,6 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import "lenis/dist/lenis.css";
-import "katex/dist/katex.min.css";
 import "./global.css";
 
 
@@ -53,6 +52,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     // Without this class the CSS never hides the native cursor, so non-JS / coarse
     // pointer devices retain normal browser behaviour.
     if (!window.matchMedia("(pointer: fine)").matches) return;
+    // Respect the OS-level preference; skip animated cursor for reduced-motion users.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     document.body.classList.add("has-custom-cursor");
 
     gsap.set(ring, { xPercent: -50, yPercent: -50 });
