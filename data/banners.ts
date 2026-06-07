@@ -15,5 +15,10 @@ export const BANNERS: Banner[] = [
     src: "https://www.ak47.work/assets/banner/ak47_banner.png",
     alt: "Portfolio of ak47",
   },
+  {
+    href: "https://blog.whatacotton.com/",
+    src: "https://blog.whatacotton.com/whatacotton_banner.png",
+    alt: "Blog of whatacotton",
+  },
 ];
 
