@@ -40,7 +40,7 @@
   border-color: var(--color-secondary);
 }
 
-@media (max-width: 30rem) {
+@media (--bp-sm) {
   .code {
     font-size: var(--fs-2);
   }
