@@ -7,7 +7,7 @@ import type { Work } from "../../../data/works";
 import styles from "./index.module.css";
 
 
-export default function Works({ works }: { works: Work[] }) {
+export default function Works({ works, showViewAll = true }: { works: Work[]; showViewAll?: boolean }) {
   const gridRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
@@ -75,11 +75,13 @@ export default function Works({ works }: { works: Work[] }) {
           </div>
         ))}
       </div>
-      <div className={styles.footer}>
-        <a href="/works/" className={styles.viewAll}>
-          View All Works →
-        </a>
-      </div>
+      {showViewAll && (
+        <div className={styles.footer}>
+          <a href="/works/" className={styles.viewAll}>
+            View All Works →
+          </a>
+        </div>
+      )}
     </section>
   );
 }
