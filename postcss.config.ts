@@ -1,8 +1,9 @@
+import type { Root } from "postcss";
 import postcssCustomMedia from "postcss-custom-media";
 
 // postcss-custom-media v12 removed importFrom, so @custom-media definitions must be
 // present in the same file. This plugin prepends them to any file that uses --bp-*.
-const customMediaDefs = {
+const customMediaDefs: Record<string, string> = {
   "--bp-xs-up": "(min-width: 21.875rem)",
   "--bp-xs-down": "(max-width: 21.8125rem)",
   "--bp-sm": "(max-width: 30rem)",
@@ -12,7 +13,7 @@ const customMediaDefs = {
 
 const injectCustomMedia = {
   postcssPlugin: "inject-custom-media",
-  Once(root) {
+  Once(root: Root) {
     if (!root.toString().includes("--bp-")) return;
     for (const [name, query] of Object.entries(customMediaDefs).reverse()) {
       root.prepend({ name: "custom-media", params: `${name} ${query}` });
