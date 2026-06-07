@@ -1,3 +1,7 @@
+import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import { FaGithub, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
 import styles from "./index.module.css";
 
@@ -12,10 +16,36 @@ const SOCIAL_LINKS = [
 ];
 
 export default function Social() {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    if (typeof window === "undefined") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    gsap.registerPlugin(ScrollTrigger);
+    if (!wrapperRef.current) return;
+    const groups = wrapperRef.current.querySelectorAll(`.${styles.group}`);
+    gsap.fromTo(
+      groups,
+      { y: 40, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.7,
+        ease: "power3.out",
+        stagger: 0.12,
+        scrollTrigger: {
+          trigger: wrapperRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      },
+    );
+  });
+
   return (
     <section>
       <h2 className="section-title">EMail / Social</h2>
-      <div className={styles.wrapper}>
+      <div ref={wrapperRef} className={styles.wrapper}>
         <div className={styles.group}>
           <p className={styles.label}>Email</p>
           <p className={styles.email}>r.rstudio.c@gmail.com</p>

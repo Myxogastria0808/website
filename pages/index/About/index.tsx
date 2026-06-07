@@ -6,7 +6,6 @@ import Katex from "../../../components/Katex";
 import "katex/dist/katex.min.css";
 import styles from "./index.module.css";
 
-
 function Symbol({ tex, mobileTex }: { tex: string; mobileTex: string }) {
   return (
     <div className={styles.symbol}>
@@ -77,7 +76,7 @@ export default function About() {
               College of Information Science
             </p>
           </div>
-          <Symbol tex={"me \\in T"} mobileTex={"\\in"} />
+          <Symbol tex={"a \\in U"} mobileTex={"\\in"} />
         </div>
         <div className={styles.entry}>
           <div ref={blockRefs[2]} className={styles.block}>
