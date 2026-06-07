@@ -11,6 +11,7 @@ export default function Works({ works }: { works: Work[] }) {
   const gridRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
+    if (typeof window === "undefined") return;
     gsap.registerPlugin(ScrollTrigger);
     if (!gridRef.current) return;
     const cards = gridRef.current.querySelectorAll(`.${styles.card}`);

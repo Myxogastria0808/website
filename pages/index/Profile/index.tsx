@@ -11,6 +11,7 @@ export default function Profile() {
   const lambdaRef = useRef<HTMLSpanElement>(null);
 
   useGSAP(() => {
+    if (typeof window === "undefined") return;
     gsap.registerPlugin(ScrollTrigger);
     const frame = frameRef.current;
     const wedge = wedgeRef.current;

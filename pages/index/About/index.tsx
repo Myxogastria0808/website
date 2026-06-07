@@ -27,6 +27,7 @@ export default function About() {
   ];
 
   useGSAP(() => {
+    if (typeof window === "undefined") return;
     gsap.registerPlugin(ScrollTrigger);
     const targets = [
       { element: blockRefs[0].current, x: -80 },

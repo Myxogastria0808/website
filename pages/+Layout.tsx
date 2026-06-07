@@ -19,7 +19,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     // Translate the time from seconds to milliseconds
     const onTick = (time: number) => lenis.raf(time * 1000);
     gsap.ticker.add(onTick);
-    // Disabled animation adjustment function for the situation that tha rug was happend when the rendering was running.
+    // Disable lag smoothing so GSAP doesn't try to "catch up" after a long frame,
+    // which would cause ScrollTrigger positions to jump during heavy renders.
     gsap.ticker.lagSmoothing(0);
     // Clean up on unmount
     return () => {
@@ -46,6 +47,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     const ring = ringRef.current;
     if (!dot || !ring) return;
 
+    if (typeof window === "undefined") return;
     gsap.registerPlugin(ScrollTrigger);
     // Bail out entirely on touch-only devices (`pointer: coarse`).
     // Without this class the CSS never hides the native cursor, so non-JS / coarse
