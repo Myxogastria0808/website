@@ -5,7 +5,6 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import "lenis/dist/lenis.css";
-import "katex/dist/katex.min.css";
 import "./global.css";
 
 

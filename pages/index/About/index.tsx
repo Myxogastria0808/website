@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import Katex from "../../../components/Katex";
+import "katex/dist/katex.min.css";
 import styles from "./index.module.css";
 
 
