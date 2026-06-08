@@ -15,4 +15,3 @@
   // Only required if your app (or one of your libraries) uses a Node.js API
   // "compatibility_flags": ["nodejs_compat"],
 }
-

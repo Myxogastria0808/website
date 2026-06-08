@@ -8,12 +8,6 @@ const TARGET_FPS = 60; // Target frames per second for the animation
 const MIN_SPEED = 0.4; // Speed of the smallest (farthest) drops (px/frame) — slow for gentle rain feel
 const MAX_SPEED = 2.2; // Speed of the largest (closest) drops (px/frame)
 
-// Background color — warm off-white
-const BG = "247, 245, 242";
-// Ink colors (RGB strings) used for both drops and their ripples
-const INK_DEFAULT = "18, 16, 14"; // warm near-black
-const INK_ACCENT = "140, 180, 206"; // prussian blue accent (~10% of drops)
-
 type Drop = {
   x: number;
   y: number;
@@ -51,24 +45,6 @@ const depth = (size: number): { opacity: number; speed: number; groundFraction: 
   };
 };
 
-// makeDrop function: Creates a new drop with random properties based on the given width and height of the canvas.
-// width/height are in CSS pixels (not DPR-scaled backing store pixels).
-// warm=true places the drop at a random y within the visible canvas (warm start on first render).
-const makeDrop = (width: number, height: number, warm = false): Drop => {
-  const size = MIN_SIZE + Math.random() * (MAX_SIZE - MIN_SIZE);
-  const { opacity, speed, groundFraction } = depth(size);
-  const groundY = height * groundFraction;
-  return {
-    x: Math.random() * width,
-    y: warm ? Math.random() * groundY : -size - Math.random() * height * 0.3,
-    size,
-    opacity,
-    speed,
-    groundY,
-    ink: Math.random() < 0.1 ? INK_ACCENT : INK_DEFAULT,
-  };
-};
-
 const LambdaRain = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null); // Get canvas element reference
   const drops = useRef<Drop[]>([]);
@@ -93,6 +69,31 @@ const LambdaRain = () => {
       return dpr;
     };
     const dpr = setCanvasSize();
+
+    // Canvas 2D API cannot consume CSS custom properties directly, so read them once at mount.
+    const cssStyle = getComputedStyle(document.documentElement);
+    const hexToRgb = (hex: string): string => {
+      const h = hex.trim().replace("#", "");
+      return `${parseInt(h.slice(0, 2), 16)}, ${parseInt(h.slice(2, 4), 16)}, ${parseInt(h.slice(4, 6), 16)}`;
+    };
+    const BG = hexToRgb(cssStyle.getPropertyValue("--color-background"));
+    const INK_DEFAULT = hexToRgb(cssStyle.getPropertyValue("--color-ink"));
+    const INK_ACCENT = hexToRgb(cssStyle.getPropertyValue("--color-secondary"));
+
+    const makeDrop = (width: number, height: number, warm = false): Drop => {
+      const size = MIN_SIZE + Math.random() * (MAX_SIZE - MIN_SIZE);
+      const { opacity, speed, groundFraction } = depth(size);
+      const groundY = height * groundFraction;
+      return {
+        x: Math.random() * width,
+        y: warm ? Math.random() * groundY : -size - Math.random() * height * 0.3,
+        size,
+        opacity,
+        speed,
+        groundY,
+        ink: Math.random() < 0.1 ? INK_ACCENT : INK_DEFAULT,
+      };
+    };
 
     // Warm-start: place drops throughout the visible canvas so rain is visible immediately.
     drops.current = Array.from({ length: DROP_COUNT }, () =>
@@ -252,15 +253,13 @@ const LambdaRain = () => {
 
   return (
     <header className={styles.hero}>
-      <canvas
-        ref={canvasRef}
-        aria-hidden="true"
-        className={styles.canvas}
-      />
+      <canvas ref={canvasRef} aria-hidden="true" className={styles.canvas} />
       <div className={styles.overlay}>
         <div className={styles.textBlock}>
           <h1 className="title">Hello, unknown observer...</h1>
-          <p aria-hidden="true" className="subtitle">Hello, unknown observer...</p>
+          <p aria-hidden="true" className="subtitle">
+            Hello, unknown observer...
+          </p>
         </div>
       </div>
     </header>
@@ -268,4 +267,3 @@ const LambdaRain = () => {
 };
 
 export default LambdaRain;
-

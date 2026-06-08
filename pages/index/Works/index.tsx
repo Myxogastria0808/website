@@ -2,12 +2,17 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { FaGithub, FaArrowUpRightFromSquare } from "react-icons/fa6";
-import type { Work } from "../../../data/works";
+import { WorkCard, TextLink } from "../../../components";
+import type { Work } from "../../../data/works/works";
 import styles from "./index.module.css";
 
-
-export default function Works({ works, showViewAll = true }: { works: Work[]; showViewAll?: boolean }) {
+export default function Works({
+  works,
+  showViewAll = true,
+}: {
+  works: Work[];
+  showViewAll?: boolean;
+}) {
   const gridRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
@@ -15,7 +20,7 @@ export default function Works({ works, showViewAll = true }: { works: Work[]; sh
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     gsap.registerPlugin(ScrollTrigger);
     if (!gridRef.current) return;
-    const cards = gridRef.current.querySelectorAll(`.${styles.card}`);
+    const cards = gridRef.current.querySelectorAll(`.${styles.cardWrapper}`);
     gsap.fromTo(
       cards,
       { y: 40, opacity: 0 },
@@ -39,51 +44,16 @@ export default function Works({ works, showViewAll = true }: { works: Work[]; sh
       <h2 className="section-title">Works</h2>
       <div ref={gridRef} className={styles.grid}>
         {works.map((work) => (
-          <div key={work.name} className={styles.card}>
-            <p className={styles.cardName}>{work.name}</p>
-            <p className={styles.cardDesc}>{work.description}</p>
-            <div className={styles.tags}>
-              {work.tags.map((tag) => (
-                <span key={tag} className={styles.tag}>
-                  {tag}
-                </span>
-              ))}
-            </div>
-            <div className={styles.links}>
-              {work.github && (
-                <a
-                  href={work.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.link}
-                >
-                  <FaGithub size="1rem" />
-                  GitHub
-                </a>
-              )}
-              {work.demo && (
-                <a
-                  href={work.demo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.link}
-                >
-                  <FaArrowUpRightFromSquare size="0.875rem" />
-                  Demo
-                </a>
-              )}
-            </div>
+          <div key={work.name} className={styles.cardWrapper}>
+            <WorkCard work={work} />
           </div>
         ))}
       </div>
       {showViewAll && (
         <div className={styles.footer}>
-          <a href="/works/" className={styles.viewAll}>
-            View All Works →
-          </a>
+          <TextLink href="/works/" content="View All Works →" />
         </div>
       )}
     </section>
   );
 }
-

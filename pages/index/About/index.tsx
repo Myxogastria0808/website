@@ -6,7 +6,7 @@ import Katex from "../../../components/Katex";
 import "katex/dist/katex.min.css";
 import styles from "./index.module.css";
 
-function Symbol({ tex, mobileTex }: { tex: string; mobileTex: string }) {
+const Symbol = ({ tex, mobileTex }: { tex: string; mobileTex: string }) => {
   return (
     <div className={styles.symbol}>
       <span className={styles.symbolDesktop}>
@@ -17,7 +17,7 @@ function Symbol({ tex, mobileTex }: { tex: string; mobileTex: string }) {
       </span>
     </div>
   );
-}
+};
 
 export default function About() {
   const blockRefs = [
@@ -62,14 +62,14 @@ export default function About() {
       <div className={styles.wrapper}>
         <div className={styles.entry}>
           <div ref={blockRefs[0]} className={styles.block}>
-            <p className={styles.label}>Handle name</p>
+            <p className="label">Handle name</p>
             <p className={styles.text}>Myxogastria0808</p>
           </div>
           <Symbol tex={"A \\xrightarrow{\\sim} B"} mobileTex={"\\cong"} />
         </div>
         <div className={`${styles.entry} ${styles.entryReverse}`}>
           <div ref={blockRefs[1]} className={styles.block}>
-            <p className={styles.label}>Affiliation</p>
+            <p className="label">Affiliation</p>
             <p className={styles.text}>
               University of Tsukuba
               <br />
@@ -80,7 +80,7 @@ export default function About() {
         </div>
         <div className={styles.entry}>
           <div ref={blockRefs[2]} className={styles.block}>
-            <p className={styles.label}>Interest</p>
+            <p className="label">Interest</p>
             <p className={styles.text}>Category Theory, HoTT, Type Theory, Nix</p>
           </div>
           <Symbol tex={"\\lambda x {:} A.\\, x"} mobileTex={"\\lambda"} />
@@ -89,4 +89,3 @@ export default function About() {
     </section>
   );
 }
-

@@ -1,0 +1,20 @@
+.link {
+  font-size: var(--fs-7);
+  text-decoration: none;
+  width: max-content;
+  border-bottom: var(--border-width) solid transparent;
+  padding-bottom: var(--space-xs);
+  transition:
+    color var(--duration-xs),
+    border-color var(--duration-xs);
+}
+
+.primary {
+  color: var(--color-primary);
+  border-color: var(--color-secondary);
+}
+
+.primary:hover {
+  color: var(--color-secondary);
+  border-color: transparent;
+}

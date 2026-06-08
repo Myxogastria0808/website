@@ -1,26 +1,22 @@
-import { WORKS } from "../../data/works";
+import { WORKS } from "../../data/works/works";
 import About from "./About";
-import Banner from "./Banner";
+import Banners from "./Banners";
 import LambdaRain from "./LambdaRain";
 import Profile from "./Profile";
 import Social from "./Social";
 import Works from "./Works";
-import styles from "./index.module.css";
-
-const latestWorks = [...WORKS]
-  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-  .slice(0, 3);
+const latestWorks = [...WORKS].sort((a, b) => parseInt(b.year) - parseInt(a.year)).slice(0, 3);
 
 export default function Page() {
   return (
     <>
       <LambdaRain />
-      <div className={styles.container}>
+      <div className="container">
         <Profile />
         <About />
         <Social />
         <Works works={latestWorks} />
-        <Banner />
+        <Banners />
       </div>
     </>
   );

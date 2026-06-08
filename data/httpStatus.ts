@@ -73,4 +73,3 @@ export const HTTP_STATUS: Record<number, string> = {
   510: "Not Extended",
   511: "Network Authentication Required",
 };
-
