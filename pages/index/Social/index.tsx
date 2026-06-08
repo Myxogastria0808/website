@@ -47,11 +47,11 @@ export default function Social() {
       <h2 className="section-title">EMail / Social</h2>
       <div ref={wrapperRef} className={styles.wrapper}>
         <div className={styles.group}>
-          <p className={styles.label}>Email</p>
+          <p className="label">Email</p>
           <p className={styles.email}>r.rstudio.c@gmail.com</p>
         </div>
         <div className={styles.group}>
-          <p className={styles.label}>Social</p>
+          <p className="label">Social</p>
           <div className={styles.icons}>
             {SOCIAL_LINKS.map(({ href, label, Icon }) => (
               <a
@@ -62,7 +62,7 @@ export default function Social() {
                 aria-label={label}
                 className={styles.iconLink}
               >
-                <Icon size="2rem" />
+                <Icon className={styles.socialIcon} />
               </a>
             ))}
           </div>
@@ -71,4 +71,3 @@ export default function Social() {
     </section>
   );
 }
-

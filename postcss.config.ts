@@ -27,3 +27,4 @@ const injectCustomMedia = {
 export default {
   plugins: [injectCustomMedia, postcssCustomMedia()],
 };
+

@@ -1,9 +1,9 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  gap: 4rem;
-  padding: 0 1.5rem;
-  max-width: 800px;
+  gap: var(--space-xl);
+  padding: 0 var(--space-md);
+  max-width: var(--container-width-md);
   margin: 0 auto;
 }
 
@@ -11,7 +11,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 2rem;
+  gap: var(--space-lg);
 }
 
 .entryReverse {
@@ -29,17 +29,10 @@
 .symbol {
   flex-shrink: 0;
   width: max-content;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
   font-size: var(--fs-4);
   color: var(--color-secondary);
-}
-
-.label {
-  font-size: var(--fs-10);
-  color: var(--color-secondary);
-  margin-bottom: 0.5rem;
 }
 
 .text {
@@ -68,4 +61,3 @@
     display: inline;
   }
 }
-

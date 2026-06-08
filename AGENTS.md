@@ -17,7 +17,7 @@ Use Bun for package scripts:
 
 ## Coding Style & Naming Conventions
 
-Write TypeScript and React components using the existing functional component style. Keep component directories PascalCase, for example `components/Footer/` or `pages/index/Profile/`. Use CSS Modules for component styles; do not use inline `style={{}}`. Every `<div>` should have a class name. Prefer `rem` and `var(--fs-*)` sizing; reserve `px` for borders or other hairline values. Use breakpoints from `pages/global.css` via `@media (--bp-*)`. External links must include `target="_blank" rel="noopener noreferrer"`.
+Write TypeScript and React components using the existing functional component style. Keep component directories PascalCase, for example `components/Footer/` or `pages/index/Profile/`. Use CSS Modules for component styles; do not use inline `style={{}}`. Every `<div>` should have a class name. Prefer `rem` and `var(--fs-*)` sizing; reserve `px` for borders or other hairline values. Use breakpoints from `pages/global.css` via `@media (--bp-*)`. Do not set `font-family` directly in CSS Modules for non-Noto-Sans fonts; instead apply the global utility class (`.font-megrim`, `.font-wavefont`) on the TSX element, for example `className={`${styles.foo} font-megrim`}`. Use design tokens from `pages/global.css` for colors (`var(--color-*)`), border radius (`var(--radius-default)`), and borders (`var(--border-default)`). External links must include `target="_blank" rel="noopener noreferrer"`. Use arrow function syntax (`const foo = () => {}`) for all functions except `export default function` page/component declarations; this applies to named exports, local helpers, and in-component functions alike.
 
 ## Testing Guidelines
 
@@ -30,4 +30,3 @@ The Git history uses concise Conventional Commit prefixes such as `feat:`, `fix:
 ## Cloudflare & NixOS Notes
 
 SSR runs inside `workerd`, not Node.js. Do not use Node APIs unless `nodejs_compat` is intentionally enabled in `wrangler.jsonc`. Keep `wrangler.jsonc` `compatibility_date` supported by the installed Miniflare version. In the Nix shell, `NODE_EXTRA_CA_CERTS` must point to the Nix CA bundle for external HTTPS fetches during SSR.
-

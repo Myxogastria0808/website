@@ -10,6 +10,8 @@
   --color-accent: #cfcbff;
   --color-background: #f7f5f2;
   --color-pointer: #f4834a;
+  --color-sand: #d6e8c2;
+  --color-ink: #12100e;
 
   /* Harmonic series: base × 10 ÷ n */
 
@@ -24,6 +26,26 @@
   --fs-8: calc(1rem * 10 / 8);
   --fs-9: calc(1rem * 10 / 9);
   --fs-10: calc(1rem * 10 / 10);
+
+  --radius-default: 0.5rem;
+
+  --border-width: 1.5px;
+  --border-default: var(--border-width) solid var(--color-secondary);
+
+  --space-xs: 0.125rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 2rem;
+  --space-xl: 4rem;
+  --space-2xl: 8rem;
+
+  --container-width-lg: 1200px;
+  --container-width-md: 800px;
+
+  --duration-xs: 0.2s;
+  --duration-sm: 0.4s;
+  --duration-md: 0.8s;
+  --duration-lg: 1.6s;
 
   /* vw — matches --fs-{n} at viewport 100rem (1600px) */
   --fs-vw-1: calc(1vw * 10 / 1);
@@ -121,11 +143,11 @@ summary,
   /* Transition only shape/color properties — never `transform`, which is updated
      every frame by JS and must not be delayed by a transition curve. */
   transition:
-    clip-path 0.15s ease,
-    background-color 0.15s ease,
-    width 0.15s ease,
-    height 0.15s ease,
-    border-radius 0.15s ease;
+    clip-path var(--duration-xs) ease,
+    background-color var(--duration-xs) ease,
+    width var(--duration-xs) ease,
+    height var(--duration-xs) ease,
+    border-radius var(--duration-xs) ease;
 }
 
 /* When hovering a clickable element the dot morphs into an upward-pointing triangle
@@ -145,11 +167,11 @@ summary,
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
-  border: 1.5px solid var(--color-primary);
+  border: var(--border-width) solid var(--color-primary);
   pointer-events: none;
   z-index: 9998;
   display: none;
-  transition: border-color 0.15s ease;
+  transition: border-color var(--duration-xs) ease;
 }
 
 .cursor-ring--pointer {
@@ -167,12 +189,36 @@ summary,
   color: var(--color-pointer);
   white-space: nowrap;
   opacity: 0;
-  transition: opacity 0.15s ease;
+  transition: opacity var(--duration-xs) ease;
   pointer-events: none;
 }
 
 .cursor-click-label--visible {
   opacity: 1;
+}
+
+/*** Layout ***/
+.container {
+  margin: 0 auto;
+  width: 100%;
+  max-width: var(--container-width-lg);
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100lvh;
+}
+
+.layout-content {
+  flex: 1;
+}
+
+/*** Label ***/
+.label {
+  font-size: var(--fs-10);
+  color: var(--color-secondary);
+  margin-bottom: var(--space-sm);
 }
 
 /*** Font Sets ***/
@@ -200,7 +246,7 @@ summary,
 
 .section-title {
   text-align: center;
-  margin: 12.5rem 0 3rem 0;
+  margin: var(--space-2xl) 0 var(--space-lg) 0;
 }
 
 .subtitle {

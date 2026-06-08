@@ -4,7 +4,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import styles from "./index.module.css";
 
-
 export default function Profile() {
   const frameRef = useRef<HTMLDivElement>(null);
   const wedgeRef = useRef<HTMLDivElement>(null);
@@ -66,6 +65,10 @@ export default function Profile() {
         },
       },
     );
+
+    const observer = new ResizeObserver(() => ScrollTrigger.refresh());
+    observer.observe(frame);
+    return () => observer.disconnect();
   });
 
   return (
@@ -77,7 +80,7 @@ export default function Profile() {
             Call me
           </span>
           <div className={styles.aside}>
-            <img src="/image0.jpeg" alt="icon" className={styles.icon} />
+            <img src="/avator.jpeg" alt="icon" className={styles.icon} />
           </div>
         </div>
         <div ref={wedgeRef} className={styles.wedge}>

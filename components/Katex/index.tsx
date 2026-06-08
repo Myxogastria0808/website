@@ -23,4 +23,3 @@ export default function Katex({ tex, displayMode = false, className }: Props) {
     />
   );
 }
-

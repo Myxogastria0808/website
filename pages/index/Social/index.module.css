@@ -2,17 +2,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
-  padding: 0 1.5rem;
+  gap: var(--space-lg);
+  padding: 0 var(--space-md);
 }
 
 .group {
-}
-
-.label {
-  font-size: var(--fs-10);
-  color: var(--color-secondary);
-  margin-bottom: 0.5rem;
+  display: block;
 }
 
 .email {
@@ -22,27 +17,28 @@
 
 .icons {
   display: flex;
-  gap: 1.5rem;
+  gap: var(--space-md);
 }
 
 .iconLink {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 4rem;
-  height: 4rem;
+  display: grid;
+  place-items: center;
+  width: var(--space-xl);
+  height: var(--space-xl);
   border-radius: 50%;
-  border: 1.5px solid var(--color-secondary);
+  border: var(--border-default);
   color: var(--color-primary);
   text-decoration: none;
   transition:
-    background-color 0.2s,
-    color 0.2s;
+    background-color var(--duration-xs),
+    color var(--duration-xs);
+}
+
+.socialIcon {
+  font-size: var(--fs-5);
 }
 
 .iconLink:hover {
   background-color: var(--color-secondary);
   color: var(--color-background);
 }
-
-

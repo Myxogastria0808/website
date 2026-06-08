@@ -31,4 +31,3 @@ export const BANNERS: Banner[] = [
     alt: "Website of happy-busy",
   },
 ];
-

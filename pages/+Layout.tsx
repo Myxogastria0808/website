@@ -7,7 +7,6 @@ import { useGSAP } from "@gsap/react";
 import "lenis/dist/lenis.css";
 import "./global.css";
 
-
 export default function Layout({ children }: { children: React.ReactNode }) {
   // Lenis and ScrollTrigger integration
   useEffect(() => {
@@ -76,10 +75,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       // cursor override. `getComputedStyle` resolves inheritance, so a <span> inside
       // an <a> correctly inherits `--is-pointer: 1` from its ancestor.
       const target = e.target instanceof Element ? e.target : null;
-      const isPointer =
-        target
-          ? window.getComputedStyle(target).getPropertyValue("--is-pointer").trim() === "1"
-          : false;
+      const isPointer = target
+        ? window.getComputedStyle(target).getPropertyValue("--is-pointer").trim() === "1"
+        : false;
       dot.classList.toggle("cursor-dot--pointer", isPointer);
       ring.classList.toggle("cursor-ring--pointer", isPointer);
       if (clickLabelRef.current) {
@@ -92,7 +90,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       // Override the CSS with inline styles so the cursor disappears immediately,
       // regardless of what the media query says.
       document.body.classList.remove("has-custom-cursor");
-      if (clickLabelRef.current) clickLabelRef.current.classList.remove("cursor-click-label--visible");
+      if (clickLabelRef.current)
+        clickLabelRef.current.classList.remove("cursor-click-label--visible");
     };
 
     window.addEventListener("mousemove", onMove);
@@ -106,14 +105,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   });
 
   return (
-    <>
+    <div className="layout">
       <div ref={dotRef} className="cursor-dot" />
       <div ref={ringRef} className="cursor-ring">
-        <span ref={clickLabelRef} className="cursor-click-label">Click!</span>
+        <span ref={clickLabelRef} className="cursor-click-label">
+          Click!
+        </span>
       </div>
-      {children}
+      <div className="layout-content">{children}</div>
       <Footer />
-    </>
+    </div>
   );
 }
-

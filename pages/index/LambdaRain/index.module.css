@@ -1,7 +1,7 @@
 .hero {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 100lvh;
   overflow: hidden;
 }
 
@@ -18,15 +18,14 @@
 .overlay {
   position: relative;
   z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
   height: 100%;
 }
 
 .textBlock {
-  margin: 0 1.5rem;
-  animation: unblur 1.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  margin: 0 var(--space-md);
+  animation: unblur var(--duration-lg) cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
 @keyframes unblur {
@@ -42,11 +41,15 @@
 
 @media (prefers-reduced-motion: reduce) {
   .textBlock {
-    animation: fade-in 0.8s ease both;
+    animation: fade-in var(--duration-md) ease both;
   }
 
   @keyframes fade-in {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 }

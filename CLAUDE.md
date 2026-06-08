@@ -10,9 +10,9 @@ bun run build     # Production build
 bun run preview   # Build + preview locally
 bun run deploy    # Build + deploy to Cloudflare Workers via wrangler
 bun run typecheck # Type-check without emitting (tsc --noEmit)
+bun run lint      # Lint with oxlint
+bun run format    # Format with oxfmt
 ```
-
-No lint or test commands are configured beyond `typecheck`.
 
 ## Architecture
 
@@ -40,6 +40,9 @@ This is a personal website built with **Vike** (SSR framework) + **React 19** de
 - `<div>` には必ずクラスを付与する。無名 `<div>` は作らない。
 - ページ構造: intro は `<header>`、コンテンツは `<section>`（必ず `<h2 className="section-title">` を持つ）、末尾は `<footer>`。
 - 外部リンクには `target="_blank" rel="noopener noreferrer"` を付ける。
+- **フォント**: Noto Sans 以外のフォント（Megrim, Wavefont 等）を使うとき、CSS Module で `font-family` を直接書かない。代わりに `global.css` で定義された `.font-megrim` / `.font-wavefont` 等のクラスを TSX 側の要素に付与する（例: `className={`${styles.foo} font-megrim`}`）。
+- **デザイントークン**: 色は `var(--color-*)` 、角丸は `var(--radius-default)` 、ボーダーは `var(--border-default)` を使う。繰り返し現れる値は `:root` に変数として定義し、各 Module から参照する。
+- **関数宣言**: `export default function` 以外の関数はすべてアロー関数で書く（`const foo = () => {}`）。named export、ローカル関数、コンポーネント内ヘルパーすべてに適用する。
 
 ## NixOS-specific notes
 
@@ -49,4 +52,3 @@ When running in this NixOS/nix flake environment:
 - **`compatibility_date` errors**: The date in `wrangler.jsonc` must not exceed the date encoded in the installed miniflare version (`4.YYYYMMDD.0`).
 - **404 on all pages**: Ensure `pages/+config.ts` has `server: true` to enable the `vike:server-entry` virtual module required by `wrangler.jsonc`.
 - **Wrangler log `EROFS` errors on build**: Wrangler tries to write logs to `~/.config/.wrangler/logs/` which is read-only in this sandbox. Set `WRANGLER_LOG=none` in the shell (or `.envrc`) to suppress the error.
-
