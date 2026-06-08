@@ -15,23 +15,23 @@ export default function Head() {
       <link
         rel="icon"
         type="image/png"
-        href="https://raw.githubusercontent.com/Myxogastria0808/website/refs/heads/main/public/favicon-96x96.png"
+        href="https://raw.githubusercontent.com/Myxogastria0808/website/refs/heads/main/public/favicon/favicon-96x96.png"
         sizes="96x96"
       />
       <link
         rel="icon"
-        href="https://raw.githubusercontent.com/Myxogastria0808/website/refs/heads/main/public/favicon.ico"
+        href="https://raw.githubusercontent.com/Myxogastria0808/website/refs/heads/main/public/favicon/favicon.ico"
         type="image/vnd.microsoft.icon"
         sizes="any"
       />
       <link
         rel="apple-touch-icon"
         sizes="180x180"
-        href="https://raw.githubusercontent.com/Myxogastria0808/website/refs/heads/main/public/apple-touch-icon.png"
+        href="https://raw.githubusercontent.com/Myxogastria0808/website/refs/heads/main/public/favicon/apple-touch-icon.png"
       />
       <link
         rel="manifest"
-        href="https://raw.githubusercontent.com/Myxogastria0808/website/refs/heads/main/public/manifest.json"
+        href="https://raw.githubusercontent.com/Myxogastria0808/website/refs/heads/main/public/favicon/manifest.json"
       />
       {/* icon settings end */}
       {/* OG setting start */}
