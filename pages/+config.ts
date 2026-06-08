@@ -7,6 +7,8 @@ import vikeReact from "vike-react/config";
 const config: Config = {
   server: true,
   extends: [vikeReact],
+  htmlAttributes: { lang: "en" },
 };
 
 export default config;
+
