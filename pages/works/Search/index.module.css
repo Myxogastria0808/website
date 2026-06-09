@@ -47,7 +47,7 @@
     background-color var(--duration-xs);
 }
 
-.tagBtn:hover {
+.tagBtn:not(.tagBtnActive):hover {
   color: var(--color-primary);
   border-color: var(--color-primary);
 }
