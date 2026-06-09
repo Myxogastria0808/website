@@ -1,5 +1,5 @@
 .cardWrapper {
-  display: block;
+  display: flex;
 }
 
 .grid {

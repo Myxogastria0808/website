@@ -23,8 +23,16 @@ export const WORKS: Work[] = [
     description: "The proof for validation of DB schema migrations.",
     tags: ["Category Theory", "DB Theory"],
     year: "2026",
+    links: [],
+  },
+  {
+    name: "The Archive of Yuki Osada's Portfolio",
+    description: "Yuki Osada's Portfolio for the AC entrance exam at the University of Tsukuba.",
+    tags: ["AC Entrance Exam", "University of Tsukuba"],
+    year: "2023",
     links: [
-      { label: "GitHub", href: "https://github.com/Myxogastria0808/RDB-schema-migrations-proof" },
+      { label: "Archive Link", href: "https://archive.yukiosada.work/" },
+      { label: "GitHub", href: "https://github.com/Myxogastria0808/ac-entrance-exam-portfolio" },
     ],
   },
 ];

@@ -35,6 +35,39 @@ export const BANNERS: Banner[] = [
 ];
 ```
 
+## Claude Code Skills
+
+The following `/skills` are available in Claude Code for managing works data interactively.
+
+### Works
+
+| Skill          | Description                                                                   |
+| -------------- | ----------------------------------------------------------------------------- |
+| `/create-work` | Add a new Work entry interactively (name → description → tags → year → links) |
+| `/read-work`   | Display all works, optionally filtered by year or tag                         |
+| `/update-work` | Edit any field of an existing Work                                            |
+| `/delete-work` | Remove a Work entry                                                           |
+
+### Tags
+
+| Skill         | Description                                              |
+| ------------- | -------------------------------------------------------- |
+| `/create-tag` | Add new tags with similarity check against existing ones |
+| `/read-tag`   | Display all tags with per-tag usage counts               |
+| `/update-tag` | Rename a tag and update all Work references              |
+| `/delete-tag` | Remove a tag and strip it from all Work entries          |
+
+### Link Labels
+
+| Skill                | Description                                                                                  |
+| -------------------- | -------------------------------------------------------------------------------------------- |
+| `/create-link-label` | Add a new link label with an icon (searches react-icons, Lucide, Iconoir, Fluent UI, Carbon) |
+| `/read-link-label`   | Display all labels with their icons and usage counts                                         |
+| `/update-link-label` | Rename a label or swap its icon                                                              |
+| `/delete-link-label` | Remove a label and strip its links from all Works                                            |
+
+---
+
 ## Adding a Work
 
 Works are displayed on the `/works` page with search and tag filtering.

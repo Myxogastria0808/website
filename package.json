@@ -1,9 +1,10 @@
 {
   "name": "website",
-  "type": "module",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vike dev",
+    "prebuild": "bun scripts/generate-sitemap.ts",
     "build": "vike build",
     "preview": "vike build && vike preview",
     "deploy": "vike build && wrangler deploy",
@@ -30,6 +31,7 @@
     "@types/react": "^19.2.16",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.2",
+    "bun-types": "^1.3.14",
     "oxfmt": "^0.54.0",
     "oxlint": "^1.69.0",
     "postcss-custom-media": "^12.0.1",
@@ -38,4 +40,3 @@
     "vite": "^8.0.16"
   }
 }
-

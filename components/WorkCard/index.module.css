@@ -52,6 +52,7 @@
   flex-wrap: wrap;
   gap: var(--space-sm) var(--space-md);
   align-items: center;
+  margin-top: auto;
 }
 
 .link {
