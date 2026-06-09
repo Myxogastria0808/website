@@ -12,27 +12,17 @@ export default function Head() {
       <meta name="theme-color" content="#0288a9" />
       {/* meta settings end */}
       {/* icon settings start */}
+      <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+      <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
       <link
         rel="icon"
-        type="image/png"
-        href="https://raw.githubusercontent.com/Myxogastria0808/website/refs/heads/main/public/favicon/favicon-96x96.png"
-        sizes="96x96"
-      />
-      <link
-        rel="icon"
-        href="https://raw.githubusercontent.com/Myxogastria0808/website/refs/heads/main/public/favicon/favicon.ico"
+        href="/favicon/favicon.ico"
         type="image/vnd.microsoft.icon"
-        sizes="any"
+        sizes="32x32 48x48"
       />
-      <link
-        rel="apple-touch-icon"
-        sizes="180x180"
-        href="https://raw.githubusercontent.com/Myxogastria0808/website/refs/heads/main/public/favicon/apple-touch-icon.png"
-      />
-      <link
-        rel="manifest"
-        href="https://raw.githubusercontent.com/Myxogastria0808/website/refs/heads/main/public/favicon/manifest.json"
-      />
+      <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+      <meta name="apple-mobile-web-app-title" content="Yuki Osada's Portfolio" />
+      <link rel="manifest" href="/favicon/site.webmanifest" />
       {/* icon settings end */}
       {/* OG setting start */}
       <meta property="og:locale" content="en_US" />
