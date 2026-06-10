@@ -21,7 +21,7 @@
 
 .cardYear {
   font-size: var(--fs-10);
-  color: var(--color-secondary);
+  color: var(--color-primary);
   text-align: right;
 }
 
@@ -41,7 +41,7 @@
 
 .tag {
   font-size: var(--fs-10);
-  color: var(--color-secondary);
+  color: var(--color-primary);
   border: var(--border-default);
   border-radius: var(--radius-default);
   padding: var(--space-xs) var(--space-sm);
