@@ -47,12 +47,8 @@ export default function Head() {
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <link
-        rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Megrim&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Wavefont:wght,ROND,YELA@4..1000,100,-100&display=swap"
-        media="print"
-        onLoad={(e) => {
-          (e.currentTarget as HTMLLinkElement).media = "all";
-        }}
+        rel="stylesheet"
       />
       {/* Google fonts end */}
       <title>Yuki Osada's Portfolio</title>
