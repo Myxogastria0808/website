@@ -1,9 +1,8 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import Katex from "../../../components/Katex";
-import "katex/dist/katex.min.css";
 import styles from "./index.module.css";
 
 const Symbol = ({ tex, mobileTex }: { tex: string; mobileTex: string }) => {
@@ -25,6 +24,10 @@ export default function About() {
     useRef<HTMLDivElement>(null),
     useRef<HTMLDivElement>(null),
   ];
+
+  useEffect(() => {
+    void import("katex/dist/katex.min.css");
+  }, []);
 
   useGSAP(() => {
     if (typeof window === "undefined") return;

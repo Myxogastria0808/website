@@ -21,13 +21,13 @@ const OUTER_POINTS = [
 
 const OUTER_FILLS = [
   "var(--color-secondary)",
-  "var(--color-secondary-sand)",
+  "var(--color-tertiary)",
   "var(--color-secondary)",
-  "var(--color-secondary-sand)",
+  "var(--color-tertiary)",
   "var(--color-secondary)",
-  "var(--color-secondary-sand)",
+  "var(--color-tertiary)",
   "var(--color-secondary)",
-  "var(--color-secondary-sand)",
+  "var(--color-tertiary)",
   "var(--color-secondary)",
 ] as const;
 
