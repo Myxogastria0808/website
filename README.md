@@ -11,7 +11,7 @@
 [![RenovateBot](https://img.shields.io/badge/RenovateBot-1A1F6C?logo=renovate&logoColor=fff)](#)
 [![GitGuardian Shield](https://img.shields.io/badge/protected%20by-GitGuardian-blue?logo=gitguardian&logoColor=white)](https://gitguardian.com/)
 <img alt="gitleaks badge" src="https://img.shields.io/badge/protected%20by-gitleaks-blue">
-![GitHub License](https://img.shields.io/github/license/Myxogastria0808/tadaima)
+![License](https://img.shields.io/github/license/Myxogastria0808/website)
 
 Personal website built with Vike + React + Cloudflare Workers.
 
