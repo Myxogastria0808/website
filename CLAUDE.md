@@ -52,4 +52,3 @@ When running in this NixOS/nix flake environment:
 - **`compatibility_date` errors**: The date in `wrangler.jsonc` must not exceed the date encoded in the installed miniflare version (`4.YYYYMMDD.0`).
 - **404 on all pages**: Ensure `pages/+config.ts` has `server: true` to enable the `vike:server-entry` virtual module required by `wrangler.jsonc`.
 - **Wrangler log `EROFS` errors on build**: Wrangler tries to write logs to `~/.config/.wrangler/logs/` which is read-only in this sandbox. Set `WRANGLER_LOG=none` in the shell (or `.envrc`) to suppress the error.
-

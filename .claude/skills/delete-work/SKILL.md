@@ -18,6 +18,7 @@ Wait for reply. If out of range, warn and ask again.
 ## Step 3 — Confirmation
 
 Display the selected work as a formatted TypeScript object and ask (AskUserQuestion):
+
 - question: `"Delete this work?"`
 - options: `["Yes, delete it", "Cancel"]`
 - header: "Confirm"

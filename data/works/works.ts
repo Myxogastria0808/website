@@ -38,4 +38,3 @@ export const WORKS: Work[] = [
 ];
 
 export const ALL_WORKS: Work[] = [...WORKS].sort((a, b) => parseInt(b.year) - parseInt(a.year));
-

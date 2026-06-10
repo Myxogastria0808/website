@@ -23,6 +23,7 @@ Wait for reply. If the number is out of range, warn and ask again.
 ## Step 3 — Select field
 
 Display the current values of the selected work, then output:
+
 ```
 Fields:
 1. name
@@ -31,6 +32,7 @@ Fields:
 4. year
 5. links
 ```
+
 Output: **"Which field to edit? Enter a number."**
 Wait for reply.
 
@@ -41,6 +43,7 @@ Run the corresponding input step from the `create-work` skill (Step 2–6) for t
 For **tags**: show existing selections and allow adding/removing. Use the same `create-tag` similarity check for any new tags.
 
 After editing, ask (AskUserQuestion):
+
 - question: `"Edit another field?"`
 - options: `["Yes", "No"]`
 - header: "update-work"
@@ -50,6 +53,7 @@ If **Yes**, return to Step 3.
 ## Step 5 — Confirmation
 
 Display the updated work entry as a formatted TypeScript object, then ask (AskUserQuestion):
+
 - options: `["Yes, save it", "Edit more", "Cancel"]`
 - header: "Confirm"
 

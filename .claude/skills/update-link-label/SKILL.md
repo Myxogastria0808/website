@@ -23,6 +23,7 @@ Wait for reply.
 ## Step 3 — Select what to edit
 
 Ask (AskUserQuestion):
+
 - question: `"What to edit?"`
 - options: `["Label name", "Icon", "Both"]`
 - header: "update-link-label"
@@ -39,6 +40,7 @@ Follow the icon search procedure from the `create-link-label` skill (Step 3): se
 ## Step 4 — Confirmation
 
 Display a preview of the changes, then ask (AskUserQuestion):
+
 - options: `["Yes, save it", "Cancel"]`
 - header: "Confirm"
 

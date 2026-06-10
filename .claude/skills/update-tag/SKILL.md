@@ -25,12 +25,14 @@ Wait for reply.
 Output: **"New name for \`<current tag>\`?"** and wait for reply.
 
 **Similarity check**: compare the new name against all existing tags (excluding the selected one). If similar, warn and ask (AskUserQuestion):
+
 - options: `["Use existing: <similar tag>", "Use new name anyway"]`
 - header: "update-tag"
 
 ## Step 4 — Confirmation
 
 Ask (AskUserQuestion):
+
 - question: `"Rename \"<old>\" → \"<new>\"? Works using this tag will also be updated."`
 - options: `["Yes, rename it", "Cancel"]`
 - header: "Confirm"

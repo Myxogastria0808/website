@@ -22,7 +22,7 @@ Repeat until the user is done:
 1. Output: **"New tag name?"** and wait for reply.
 2. **Similarity check**: compare the name (case-insensitively and semantically) against all existing TAGS and tags collected this session. If similar, output a warning:
    > ⚠ `"<typed name>"` looks similar to the existing tag `"<similar tag>"`. Use the existing one instead?
-   Then ask (AskUserQuestion):
+   > Then ask (AskUserQuestion):
    - options: `["Use existing: <similar tag>", "Create new anyway"]`
    - header: "create-tag"
 3. If no similar tag, or the user chose "Create new anyway", add to the pending list.

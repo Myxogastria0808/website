@@ -1,5 +1,18 @@
 # website
 
+[![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white)](#)
+[![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black)](#)
+[![Vike](https://img.shields.io/badge/Vike-ffc300)](#)
+[![Nix](https://img.shields.io/badge/Nix-5277C3?logo=nixos&logoColor=white)](#)
+[![Cloudflare Workers](https://img.shields.io/badge/Cloudflare_Workers-F38020?logo=cloudflare&logoColor=white)](#)
+[![build](https://img.shields.io/github/actions/workflow/status/Myxogastria0808/website/build.yml?label=build)](https://github.com/Myxogastria0808/website/actions/workflows/build.yml)
+[![fmt](https://img.shields.io/github/actions/workflow/status/Myxogastria0808/website/fmt.yml?label=fmt)](https://github.com/Myxogastria0808/website/actions/workflows/fmt.yml)
+[![lint](https://img.shields.io/github/actions/workflow/status/Myxogastria0808/website/lint.yml?label=lint)](https://github.com/Myxogastria0808/website/actions/workflows/lint.yml)
+[![RenovateBot](https://img.shields.io/badge/RenovateBot-1A1F6C?logo=renovate&logoColor=fff)](#)
+[![GitGuardian Shield](https://img.shields.io/badge/protected%20by-GitGuardian-blue?logo=gitguardian&logoColor=white)](https://gitguardian.com/)
+<img alt="gitleaks badge" src="https://img.shields.io/badge/protected%20by-gitleaks-blue">
+![GitHub License](https://img.shields.io/github/license/Myxogastria0808/tadaima)
+
 Personal website built with Vike + React + Cloudflare Workers.
 
 ## Commands
@@ -116,4 +129,3 @@ export const WORKS: Work[] = [
 | `"Wiki"`        | Wikipedia mark |
 
 Any other string falls back to an external-link icon.
-

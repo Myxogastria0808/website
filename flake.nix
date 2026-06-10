@@ -18,6 +18,7 @@
             nodejs
             bun
             cacert
+            gitleaks
           ];
           shellHook = ''
             export NODE_EXTRA_CA_CERTS="$NIX_SSL_CERT_FILE"

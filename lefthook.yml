@@ -1,0 +1,11 @@
+pre-commit:
+  commands:
+    fmt:
+      run: bunx oxfmt .
+      stage_fixed: true
+    lint:
+      run: bun run lint
+    build:
+      run: bun run build
+    gitleaks:
+      run: gitleaks protect --staged

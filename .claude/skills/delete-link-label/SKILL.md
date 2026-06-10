@@ -18,9 +18,11 @@ Wait for reply.
 ## Step 3 — Confirmation
 
 If any works use this label, list them as a warning:
+
 > ⚠ The following works have links with this label and those links will be removed: …
 
 Ask (AskUserQuestion):
+
 - question: `"Delete label \"<label>\"?"`
 - options: `["Yes, delete it", "Cancel"]`
 - header: "Confirm"

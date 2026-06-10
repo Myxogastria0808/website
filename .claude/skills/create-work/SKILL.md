@@ -14,6 +14,7 @@ Add a new entry to `data/works/works.ts` by walking the user through questions *
 ## Step 1 — Read current data
 
 Read the following files before asking anything:
+
 - `data/works/works.ts` — current WORKS array
 - `data/works/tags.ts` — available Tag values
 - `data/works/linkIcons.ts` — available LinkLabel values
@@ -26,6 +27,7 @@ Wait for the user's reply. This is required; if the user gives nothing, ask agai
 ## Step 3 — description
 
 Ask (AskUserQuestion):
+
 - options: `["Auto-generate", "I'll write it"]`
 - description for Auto-generate: "Generate a concise one-sentence English description from the title and tags"
 - header: "description"
@@ -38,18 +40,21 @@ If **"Auto-generate"**: defer generation until after tags are collected in Step 
 ### Existing tag selection
 
 Output a numbered list as plain text:
+
 ```
 Existing tags:
 1. Category Theory
 2. DB Theory
 …
 ```
+
 Then output: **"Which tags? Enter numbers separated by commas (e.g. 1,3), or press Enter to skip."**
 Wait for reply. Parse the numbers to resolve tag names. An empty reply means no existing tags.
 
 ### New tag creation
 
 Ask (AskUserQuestion):
+
 - question: `"Add a new tag?"`
 - options: `["Yes", "No"]`
 - header: "tags"
@@ -61,18 +66,22 @@ If **"Auto-generate"** was chosen in Step 3, generate the description now using 
 ## Step 5 — year
 
 Ask (AskUserQuestion):
+
 - Derive options from distinct years in WORKS (most recent first, up to 3); always include the current calendar year if not listed; plus Other for a custom year
 - header: "year"
 
 ## Step 6 — links
 
 Ask (AskUserQuestion):
+
 - question: `"Add external links?"`
 - options: `["Yes", "No"]`
 - header: "links"
 
 If **Yes**:
+
 1. Output a numbered list of all labels as plain text:
+
    ```
    Link labels:
    1. GitHub
@@ -80,6 +89,7 @@ If **Yes**:
    …
    N. Custom
    ```
+
    Then output: **"Which labels? Enter numbers separated by commas."**
    Wait for reply. Parse the numbers.
 
@@ -94,12 +104,14 @@ If **Yes**:
 ## Step 7 — Confirmation
 
 Display the complete work entry as a formatted TypeScript object, then ask (AskUserQuestion):
+
 - options: `["Yes, add it", "Edit a field", "Cancel"]`
 - header: "Confirm"
 
 If **Cancel**, stop without writing anything.
 
 If **"Edit a field"**, output:
+
 ```
 Fields:
 1. name
@@ -108,6 +120,7 @@ Fields:
 4. year
 5. links
 ```
+
 Output: **"Which field? Enter a number."**
 Wait for reply. Jump back to the corresponding step, re-run it, then return to Step 7 (show the updated preview and confirm again).
 

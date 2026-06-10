@@ -22,4 +22,3 @@ ${pages
 };
 
 generateSitemap().catch(console.error);
-

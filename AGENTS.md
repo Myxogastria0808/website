@@ -30,4 +30,3 @@ The Git history uses concise Conventional Commit prefixes such as `feat:`, `fix:
 ## Cloudflare & NixOS Notes
 
 SSR runs inside `workerd`, not Node.js. Do not use Node APIs unless `nodejs_compat` is intentionally enabled in `wrangler.jsonc`. Keep `wrangler.jsonc` `compatibility_date` supported by the installed Miniflare version. In the Nix shell, `NODE_EXTRA_CA_CERTS` must point to the Nix CA bundle for external HTTPS fetches during SSR.
-

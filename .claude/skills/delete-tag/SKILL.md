@@ -18,9 +18,11 @@ Wait for reply.
 ## Step 3 — Confirmation
 
 If any works use this tag, list them as a warning:
+
 > ⚠ The following works reference this tag and will have it removed: …
 
 Ask (AskUserQuestion):
+
 - question: `"Delete tag \"<tag>\"?"`
 - options: `["Yes, delete it", "Cancel"]`
 - header: "Confirm"

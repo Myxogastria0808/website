@@ -29,6 +29,7 @@ Search with WebSearch: `react-icons <label name> icon`. Identify candidates and 
 ### Fallback: other icon libraries
 
 If no suitable match in react-icons, search in order (these are NOT included in react-icons):
+
 1. **Lucide** (`lucide-react`) — `lucide <label name> icon`
 2. **Iconoir** (`iconoir-react`) — `iconoir <label name> icon`
 3. **Fluent UI Icons** (`@fluentui/react-icons`) — `fluent ui icons <label name>`
@@ -37,6 +38,7 @@ If no suitable match in react-icons, search in order (these are NOT included in 
 Note which candidates require a package install.
 
 Output all candidates as plain text:
+
 ```
 Icon candidates:
 1. SiNpm   (react-icons/si)
@@ -44,6 +46,7 @@ Icon candidates:
 3. Package2 (lucide-react) ⚠ requires package install
 …
 ```
+
 Then output: **"Which icon? Enter a number, or type a custom icon as IconName@package (e.g. SiNpm@react-icons/si)."**
 Wait for reply.
 
@@ -52,6 +55,7 @@ If the chosen icon requires a package install, run `bun add <package>` before wr
 ## Step 4 — Confirmation
 
 Display a preview of the changes (import line, LINK_LABELS entry, LINK_ICONS entry), then ask (AskUserQuestion):
+
 - options: `["Yes, add it", "Cancel"]`
 - header: "Confirm"
 
