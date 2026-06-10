@@ -112,7 +112,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           Click!
         </span>
       </div>
-      <div className="layout-content">{children}</div>
+      <main className="layout-content">{children}</main>
       <Footer />
     </div>
   );

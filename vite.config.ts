@@ -17,5 +17,6 @@ export default defineConfig({
     // imports, which would require significant restructuring for marginal gain on a
     // personal portfolio.
     chunkSizeWarningLimit: 600,
+    sourcemap: true,
   },
 });

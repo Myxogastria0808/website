@@ -4,7 +4,7 @@ export default function Head() {
       {/* meta settings start */}
       <meta charSet="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta property="description" content="Yuki Osada's Portfolio" />
+      <meta name="description" content="Yuki Osada's Portfolio" />
       <meta
         name="keyword"
         content="長田悠生, '長田 悠生', '長田　悠生', 長田, 悠生, 'Yuki Osada', Yuki, Osada, Portfolio, portfolio, ポートフォリオ, ポートフォリオサイト, website, Website, 'Software Engineer', 'University of Tsukuba', 筑波大学, 情報学群, 情報科学類, coins, 'College of Information Science', 'University of Tsukuba', 'Information Science and Engineering', 'Tsukuba University', 'Information Science and Technology'"
