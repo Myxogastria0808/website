@@ -1,95 +1,57 @@
-import { useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
 import styles from "./index.module.css";
 
+// Golden ratio spiral: viewBox 1618×1000 (φ:1)
+// Each entry is the "outer" filled triangle of each successive golden-ratio square.
+// Squares peel in order: right → bottom → left → top → right → …
+// Diagonal endpoints (the spiral arc approximation) for each square:
+//   A: (1618,0)→(618,1000)   B: (618,1000)→(0,382)   C: (0,382)→(382,0)
+//   D: (382,0)→(618,236)     E: (618,236)→(472,382)   F: (472,382)→(382,292)
+//   G: (382,292)→(438,236)   H: (438,236)→(472,270)   I: (472,270)→(450,292)
+const OUTER_POINTS = [
+  "1618,0 1618,1000 618,1000", // A right  [618,1618]×[0,1000]
+  "0,382 618,1000 0,1000", // B bottom [0,618]×[382,1000]
+  "0,0 382,0 0,382", // C left   [0,382]×[0,382]
+  "382,0 618,0 618,236", // D top    [382,618]×[0,236]
+  "618,236 618,382 472,382", // E right  [472,618]×[236,382]
+  "382,292 472,382 382,382", // F bottom [382,472]×[292,382]
+  "382,236 438,236 382,292", // G left   [382,438]×[236,292]
+  "438,236 472,236 472,270", // H top    [438,472]×[236,270]
+  "472,270 472,292 450,292", // I right  [450,472]×[270,292]
+] as const;
+
+const OUTER_FILLS = [
+  "var(--color-secondary)",
+  "var(--color-secondary-sand)",
+  "var(--color-secondary)",
+  "var(--color-secondary-sand)",
+  "var(--color-secondary)",
+  "var(--color-secondary-sand)",
+  "var(--color-secondary)",
+  "var(--color-secondary-sand)",
+  "var(--color-secondary)",
+] as const;
+
 export default function Profile() {
-  const frameRef = useRef<HTMLDivElement>(null);
-  const wedgeRef = useRef<HTMLDivElement>(null);
-  const lambdaRef = useRef<HTMLSpanElement>(null);
-
-  useGSAP(() => {
-    if (typeof window === "undefined") return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    gsap.registerPlugin(ScrollTrigger);
-    const frame = frameRef.current;
-    const wedge = wedgeRef.current;
-    const lambda = lambdaRef.current;
-    if (!frame || !wedge || !lambda) return;
-
-    const getValues = () => {
-      const W = frame.offsetWidth;
-      const H = wedge.offsetHeight;
-      const d = Math.sqrt(W * W + H * H);
-      const lw = lambda.offsetWidth;
-      const lh = lambda.offsetHeight;
-      // 斜辺に対して垂直距離 lh/2 を保つオフセット
-      const size = lh / 2 + (W * lh - H * lw) / (2 * d);
-      const ox = -((size * H) / d);
-      const oy = -((size * W) / d);
-      // 移動方向を斜辺 (-W, H) と平行にするサイズ補正
-      const c = (W * lw + H * lh) / (d * d);
-      // 回転後のλのy方向半幅（スクリーン座標）
-      const halfExtentY = (lw * H + lh * W) / (2 * d);
-      // λ上端がy=0より上にはみ出す量 → その分だけ斜辺方向にずらす
-      const yMin = lh / 2 + oy - halfExtentY;
-      const shift = Math.max(0, -yMin);
-      return {
-        angle: -Math.atan2(H, W) * (180 / Math.PI),
-        oxStart: ox - (shift * W) / H,
-        oyStart: oy + shift,
-        xEnd: ox - W * (1 - c),
-        yEnd: oy + H * (1 - c),
-      };
-    };
-
-    gsap.fromTo(
-      lambda,
-      {
-        x: () => getValues().oxStart,
-        y: () => getValues().oyStart,
-        rotation: () => getValues().angle,
-      },
-      {
-        x: () => getValues().xEnd,
-        y: () => getValues().yEnd,
-        rotation: () => getValues().angle,
-        ease: "none",
-        scrollTrigger: {
-          trigger: frame,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1,
-          invalidateOnRefresh: true,
-        },
-      },
-    );
-
-    const observer = new ResizeObserver(() => ScrollTrigger.refresh());
-    observer.observe(frame);
-    return () => observer.disconnect();
-  });
-
   return (
     <section>
       <h2 className="section-title">Profile</h2>
-      <div ref={frameRef} className={styles.frame}>
-        <div className={styles.inverted}>
-          <span ref={lambdaRef} className={`${styles.lambda} font-megrim`}>
-            Call me
-          </span>
-          <div className={styles.aside}>
-            <img src="/avator.jpeg" alt="icon" className={styles.icon} />
-          </div>
-        </div>
-        <div ref={wedgeRef} className={styles.wedge}>
-          <p className={`${styles.name} font-megrim`}>
-            Yuki
-            <br />
-            Osada
-          </p>
-        </div>
+      <div className={styles.frame}>
+        <svg
+          className={styles.spiral}
+          viewBox="0 0 1618 1000"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <rect width="1618" height="1000" fill="var(--color-background)" />
+          {OUTER_POINTS.map((pts, i) => (
+            <polygon key={i} points={pts} fill={OUTER_FILLS[i]} />
+          ))}
+        </svg>
+        <p className={`${styles.name} font-megrim`}>
+          Yuki
+          <br />
+          Osada
+        </p>
       </div>
     </section>
   );
