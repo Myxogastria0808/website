@@ -19,19 +19,29 @@ export type Work = {
 
 export const WORKS: Work[] = [
   {
-    name: "The proof of DB Schema Migration",
+    name: "The Proof of DB Schema Migration",
     description: "The proof for validation of DB schema migrations.",
-    tags: ["Category Theory", "DB Theory"],
+    tags: ["Category Theory", "DB Theory", "Proof"],
     year: "2026",
     links: [],
   },
   {
+    name: "Yuki Osada's Revamped Portfolio",
+    description: "Yuki Osada's Portfolio for the entrance exam at the NII.",
+    tags: ["Entrance Exam", "NII", "SOKENDAI", "Portfolio", "Website"],
+    year: "2026",
+    links: [
+      { label: "Website", href: "https://yukiosada.work/" },
+      { label: "GitHub", href: "https://github.com/Myxogastria0808/website" },
+    ],
+  },
+  {
     name: "The Archive of Yuki Osada's Portfolio",
     description: "Yuki Osada's Portfolio for the AC entrance exam at the University of Tsukuba.",
-    tags: ["AC Entrance Exam", "University of Tsukuba"],
+    tags: ["AC Entrance Exam", "University of Tsukuba", "Portfolio", "Website"],
     year: "2023",
     links: [
-      { label: "Archive Link", href: "https://archive.yukiosada.work/" },
+      { label: "Website", href: "https://archive.yukiosada.work/" },
       { label: "GitHub", href: "https://github.com/Myxogastria0808/ac-entrance-exam-portfolio" },
     ],
   },

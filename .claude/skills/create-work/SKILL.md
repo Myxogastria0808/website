@@ -39,7 +39,13 @@ If **"Auto-generate"**: defer generation until after tags are collected in Step 
 
 ### Existing tag selection
 
-Output a numbered list as plain text:
+Ask (AskUserQuestion):
+
+- question: `"Select existing tags?"`
+- options: `["Yes", "No"]`
+- header: "tags"
+
+If **Yes**: output a numbered list as plain text:
 
 ```
 Existing tags:
@@ -48,8 +54,8 @@ Existing tags:
 …
 ```
 
-Then output: **"Which tags? Enter numbers separated by commas (e.g. 1,3), or press Enter to skip."**
-Wait for reply. Parse the numbers to resolve tag names. An empty reply means no existing tags.
+Then output: **"Which tags? Enter numbers separated by commas (e.g. 1,3). Type 0 to select none."**
+Wait for reply. Parse the numbers to resolve tag names. A reply of `0` or an unrecognised value means no existing tags.
 
 ### New tag creation
 
@@ -78,7 +84,7 @@ Ask (AskUserQuestion):
 - options: `["Yes", "No"]`
 - header: "links"
 
-If **Yes**:
+If **Yes**, repeat the following loop until the user is done:
 
 1. Output a numbered list of all labels as plain text:
 
@@ -90,16 +96,22 @@ If **Yes**:
    N. Custom
    ```
 
-   Then output: **"Which labels? Enter numbers separated by commas."**
-   Wait for reply. Parse the numbers.
+   Then output: **"Which label? Enter a number."**
+   Wait for reply. Parse the number to resolve the label name.
 
-2. For each selected label, output: **"URL for \<label\>?"** and wait for the reply.
+2. For **Custom**, first output: **"Label text?"** and wait for reply.
+
+3. Output: **"URL for \<label\>?"** and wait for the reply.
    - Fetch the URL with WebFetch to verify it returns a non-error response.
    - If the fetch fails or returns 4xx/5xx, output a warning and ask (AskUserQuestion):
      - options: `["Re-enter URL", "Use it anyway"]`, header: "links"
    - If "Re-enter URL", ask for the URL again and repeat the check.
 
-3. For **Custom**, first output: **"Label text?"** and wait for reply. Then ask for the URL as above.
+4. Ask (AskUserQuestion):
+   - question: `"Add another link?"`
+   - options: `["Yes", "No"]`
+   - header: "links"
+   - If **No**, exit the loop.
 
 ## Step 7 — Confirmation
 
