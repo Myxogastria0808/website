@@ -218,7 +218,7 @@ summary,
 .label {
   font-size: var(--fs-10);
   color: var(--color-secondary);
-  margin-bottom: var(--space-sm);
+  margin: 0 0 var(--space-sm) 0;
 }
 
 /*** Font Sets ***/

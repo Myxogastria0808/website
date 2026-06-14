@@ -13,7 +13,7 @@ Edit an existing entry in `data/works/works.ts`.
 
 ## Step 1 — Read data
 
-Read `data/works/works.ts`, `data/works/tags.ts`, `data/works/linkIcons.ts`.
+Read `data/works/works.ts`, `data/works/tags.ts`, `data/shared/linkIcons.ts`.
 
 ## Step 2 — Select work
 

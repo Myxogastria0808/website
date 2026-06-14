@@ -43,6 +43,7 @@ This is a personal website built with **Vike** (SSR framework) + **React 19** de
 - **フォント**: Noto Sans 以外のフォント（Megrim, Wavefont 等）を使うとき、CSS Module で `font-family` を直接書かない。代わりに `global.css` で定義された `.font-megrim` / `.font-wavefont` 等のクラスを TSX 側の要素に付与する（例: `className={`${styles.foo} font-megrim`}`）。
 - **デザイントークン**: 色は `var(--color-*)` 、角丸は `var(--radius-default)` 、ボーダーは `var(--border-default)` を使う。繰り返し現れる値は `:root` に変数として定義し、各 Module から参照する。
 - **関数宣言**: `export default function` 以外の関数はすべてアロー関数で書く（`const foo = () => {}`）。named export、ローカル関数、コンポーネント内ヘルパーすべてに適用する。
+- **padding / margin**: CSS Module で `padding-top` / `padding-right` / `padding-bottom` / `padding-left` / `margin-top` 等の個別プロパティは使わない。必ず `padding` / `margin` ショートハンドで書く（例: `padding-bottom: 1rem` ではなく `padding: 0 0 1rem 0`）。
 
 ## NixOS-specific notes
 

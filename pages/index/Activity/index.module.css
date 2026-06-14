@@ -1,0 +1,31 @@
+.subLabel {
+  font-size: var(--fs-7);
+  color: var(--color-primary);
+  padding: 0 var(--space-md);
+  margin: 0 0 var(--space-md) 0;
+  text-align: center;
+}
+
+.cardWrapper {
+  display: flex;
+}
+
+.topicGrid {
+  display: flex;
+  justify-content: center;
+  padding: 0 var(--space-md);
+  margin: 0 0 var(--space-lg) 0;
+}
+
+.orgsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-md);
+  padding: 0 var(--space-md);
+}
+
+.footer {
+  text-align: center;
+  padding: var(--space-xl) 0 0 0;
+}

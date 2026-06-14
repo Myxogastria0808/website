@@ -1,10 +1,10 @@
 ---
 name: create-link-label
-description: Add a new labelled external-link type with a react-icons icon to data/works/linkIcons.ts. Updates LINK_LABELS, LINK_ICONS, and the import statements.
+description: Add a new labelled external-link type with a react-icons icon to data/shared/linkIcons.ts. Updates LINK_LABELS, LINK_ICONS, and the import statements.
 user-triggered: true
 ---
 
-Add a new entry to `LINK_LABELS` and `LINK_ICONS` in `data/works/linkIcons.ts`.
+Add a new entry to `LINK_LABELS` and `LINK_ICONS` in `data/shared/linkIcons.ts`.
 
 ## Input method rules
 
@@ -13,7 +13,7 @@ Add a new entry to `LINK_LABELS` and `LINK_ICONS` in `data/works/linkIcons.ts`.
 
 ## Step 1 — Read current data
 
-Read `data/works/linkIcons.ts` to understand existing labels, icons, and import statements.
+Read `data/shared/linkIcons.ts` to understand existing labels, icons, and import statements.
 
 ## Step 2 — Label name
 
@@ -63,7 +63,7 @@ If Cancel, stop without writing anything.
 
 ## Step 5 — Write to file
 
-Edit `data/works/linkIcons.ts`:
+Edit `data/shared/linkIcons.ts`:
 
 1. **Import**: add the icon to the existing import from its package. If the package is new, add a new import line grouped with the other `react-icons` imports.
 2. **LINK_LABELS**: append the new label. Keep the array sorted alphabetically (case-insensitive).

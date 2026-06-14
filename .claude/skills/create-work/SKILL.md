@@ -17,7 +17,7 @@ Read the following files before asking anything:
 
 - `data/works/works.ts` — current WORKS array
 - `data/works/tags.ts` — available Tag values
-- `data/works/linkIcons.ts` — available LinkLabel values
+- `data/shared/linkIcons.ts` — available LinkLabel values
 
 ## Step 2 — name
 

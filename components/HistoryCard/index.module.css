@@ -32,21 +32,6 @@
   overflow-wrap: break-word;
 }
 
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-sm);
-  padding: 0 0 var(--space-md) 0;
-}
-
-.tag {
-  font-size: var(--fs-10);
-  color: var(--color-primary);
-  border: var(--border-default);
-  border-radius: var(--radius-default);
-  padding: var(--space-xs) var(--space-sm);
-}
-
 .links {
   display: flex;
   flex-wrap: wrap;
@@ -78,14 +63,8 @@
   border-color: transparent;
 }
 
-@media (--bp-lg) {
-  .card {
-    width: var(--width-md);
-  }
-}
-
 @media (--bp-md) {
   .card {
-    width: var(--width-sm);
+    width: 100%;
   }
 }

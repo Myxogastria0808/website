@@ -3,7 +3,7 @@
   text-decoration: none;
   width: max-content;
   border-bottom: var(--border-width) solid transparent;
-  padding-bottom: var(--space-xs);
+  padding: 0 0 var(--space-xs) 0;
   transition:
     color var(--duration-xs),
     border-color var(--duration-xs);

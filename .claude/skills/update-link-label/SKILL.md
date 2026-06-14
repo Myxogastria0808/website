@@ -1,10 +1,10 @@
 ---
 name: update-link-label
-description: Edit a link label's name or icon in data/works/linkIcons.ts and update all references in works.ts.
+description: Edit a link label's name or icon in data/shared/linkIcons.ts and update all references in works.ts.
 user-triggered: true
 ---
 
-Edit an entry in `LINK_LABELS` / `LINK_ICONS` in `data/works/linkIcons.ts`.
+Edit an entry in `LINK_LABELS` / `LINK_ICONS` in `data/shared/linkIcons.ts`.
 
 ## Input method rules
 
@@ -13,7 +13,7 @@ Edit an entry in `LINK_LABELS` / `LINK_ICONS` in `data/works/linkIcons.ts`.
 
 ## Step 1 — Read data
 
-Read `data/works/linkIcons.ts` and `data/works/works.ts`.
+Read `data/shared/linkIcons.ts` and `data/works/works.ts`.
 
 ## Step 2 — Select label
 
@@ -48,7 +48,7 @@ If **Cancel**, stop.
 
 ## Step 5 — Write to file
 
-1. In `data/works/linkIcons.ts`: update the label string in `LINK_LABELS`, the key in `LINK_ICONS`, and the import if the icon changed. Keep `LINK_LABELS` sorted alphabetically.
+1. In `data/shared/linkIcons.ts`: update the label string in `LINK_LABELS`, the key in `LINK_ICONS`, and the import if the icon changed. Keep `LINK_LABELS` sorted alphabetically.
 2. In `data/works/works.ts`: if the label name changed, replace every occurrence in `WorkLink.label` fields.
 
 Run `bun run typecheck`.

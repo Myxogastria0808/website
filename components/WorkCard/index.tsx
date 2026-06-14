@@ -1,5 +1,5 @@
-import { LINK_ICONS, FallbackIcon } from "../../data/works/linkIcons";
-import type { LinkLabel } from "../../data/works/linkIcons";
+import { LINK_ICONS, FallbackIcon } from "../../data/shared/linkIcons";
+import type { LinkLabel } from "../../data/shared/linkIcons";
 import type { Work } from "../../data/works/works";
 import styles from "./index.module.css";
 

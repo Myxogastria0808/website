@@ -1,14 +1,14 @@
 ---
 name: read-link-label
-description: Display existing link labels and their icons from data/works/linkIcons.ts with usage counts.
+description: Display existing link labels and their icons from data/shared/linkIcons.ts with usage counts.
 user-triggered: true
 ---
 
-Display the contents of `data/works/linkIcons.ts`.
+Display the contents of `data/shared/linkIcons.ts`.
 
 ## Step 1 — Read data
 
-Read `data/works/linkIcons.ts` and `data/works/works.ts`.
+Read `data/shared/linkIcons.ts` and `data/works/works.ts`.
 
 ## Step 2 — Display
 
