@@ -1,6 +1,5 @@
 import { useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { HistoryCard, TextLink } from "../../../components";
 import type { HistoryEntry } from "../../../data/history/history";
@@ -31,33 +30,34 @@ export default function Timeline({ entries }: { entries: HistoryEntry[] }) {
   useGSAP(() => {
     if (typeof window === "undefined") return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    gsap.registerPlugin(ScrollTrigger);
     if (!containerRef.current) return;
 
     const isMobile = window.matchMedia("(max-width: 40rem)").matches;
-    const items = containerRef.current.querySelectorAll(`.${styles.item}`);
+    const items = containerRef.current.querySelectorAll<HTMLElement>(`.${styles.item}`);
+
     items.forEach((item) => {
       const isLeft = item.classList.contains(styles.itemLeft);
-      const from = isMobile ? { y: 40, opacity: 0 } : { x: isLeft ? -80 : 80, opacity: 0 };
-      const to = isMobile ? { y: 0, opacity: 1 } : { x: 0, opacity: 1 };
-      gsap.fromTo(item, from, {
-        ...to,
-        duration: 0.8,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: item,
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-      });
+      gsap.set(item, isMobile ? { y: 40, opacity: 0 } : { x: isLeft ? -80 : 80, opacity: 0 });
     });
 
-    const refresh = () => requestAnimationFrame(() => ScrollTrigger.refresh());
-    if (document.readyState === "complete") {
-      refresh();
-    } else {
-      window.addEventListener("load", refresh, { once: true });
-    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const item = entry.target as HTMLElement;
+          const isLeft = item.classList.contains(styles.itemLeft);
+          const from = isMobile ? { y: 40, opacity: 0 } : { x: isLeft ? -80 : 80, opacity: 0 };
+          const to = isMobile ? { y: 0, opacity: 1 } : { x: 0, opacity: 1 };
+          gsap.fromTo(item, from, { ...to, duration: 0.8, ease: "power3.out" });
+          observer.unobserve(item);
+        });
+      },
+      { threshold: 0, rootMargin: "0px 0px -20% 0px" },
+    );
+
+    items.forEach((item) => observer.observe(item));
+
+    return () => observer.disconnect();
   });
 
   const items = buildItems(entries);
