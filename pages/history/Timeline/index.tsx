@@ -52,9 +52,12 @@ export default function Timeline({ entries }: { entries: HistoryEntry[] }) {
       });
     });
 
-    requestAnimationFrame(() => {
-      ScrollTrigger.refresh();
-    });
+    const refresh = () => requestAnimationFrame(() => ScrollTrigger.refresh());
+    if (document.readyState === "complete") {
+      refresh();
+    } else {
+      window.addEventListener("load", refresh, { once: true });
+    }
   });
 
   const items = buildItems(entries);
