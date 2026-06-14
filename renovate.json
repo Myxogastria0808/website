@@ -4,6 +4,6 @@
   "timezone": "Asia/Tokyo",
   "dependencyDashboard": false,
   "prConcurrentLimit": 0,
-  "schedule": ["0 0 * * *"],
-  "automergeSchedule": ["0 0 * * 6"]
+  "schedule": ["after 11pm and before 1am"],
+  "automergeSchedule": ["after 11pm and before 1am on saturday"]
 }
