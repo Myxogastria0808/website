@@ -70,9 +70,9 @@ export const HISTORIES: HistoryEntry[] = [
     links: [{ label: "Website", href: "https://sohosai.com/" }],
   },
   {
-    name: "Biopackathon",
+    name: "Joined Biopackathon",
     description:
-      "A community hackathon focused on packaging life science databases and data analysis tools as open source software.",
+      "Joined Biopackathon, a community hackathon focused on packaging life science databases and data analysis tools as open source software.",
     year: "2023-08",
     feature: {
       category: "Affiliations",
@@ -83,9 +83,9 @@ export const HISTORIES: HistoryEntry[] = [
     links: [{ label: "Website", href: "https://sites.google.com/view/biopackathon/" }],
   },
   {
-    name: "WORD Editorial Board",
+    name: "Joined WORD Editorial Board",
     description:
-      "A student-run magazine of the School of Informatics at the University of Tsukuba.",
+      "Joined WORD, a student-run magazine of the School of Informatics at the University of Tsukuba.",
     year: "2023-12",
     feature: {
       category: "Affiliations",
@@ -95,9 +95,9 @@ export const HISTORIES: HistoryEntry[] = [
     links: [{ label: "Website", href: "https://www.word-ac.net/" }],
   },
   {
-    name: "Ultra-Coins",
+    name: "Joined Ultra-Coins",
     description:
-      "A student computing organization at the University of Tsukuba, focused on server management and network infrastructure operation.",
+      "Joined Ultra-Coins, a student computing organization at the University of Tsukuba, focused on server management and network infrastructure operation.",
     year: "2024-12",
     feature: {
       category: "Affiliations",
@@ -108,9 +108,9 @@ export const HISTORIES: HistoryEntry[] = [
     links: [{ label: "Website", href: "https://ultra.coins.tsukuba.ac.jp/" }],
   },
   {
-    name: "Genshiken",
+    name: "Joined Genshiken",
     description:
-      "A subculture circle at the University of Tsukuba, with activities spanning manga, anime, cosplay, doujinshi, and more.",
+      "Joined Genshiken (現代視覚文化研究会), a subculture circle at the University of Tsukuba, with activities spanning manga, anime, cosplay, doujinshi, and more.",
     year: "2025-04",
     feature: {
       category: "Affiliations",
@@ -121,8 +121,8 @@ export const HISTORIES: HistoryEntry[] = [
     links: [{ label: "Website", href: "https://gsk-tsukuba.net/" }],
   },
   {
-    name: "Kirinohanovel",
-    description: "A novel game production circle.",
+    name: "Joined Kirinohanovel",
+    description: "Joined Kirinohanovel, a novel game production circle.",
     year: "2025-07",
     feature: {
       category: "Affiliations",
