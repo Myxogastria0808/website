@@ -121,13 +121,13 @@ export const HISTORIES: HistoryEntry[] = [
     links: [{ label: "Website", href: "https://gsk-tsukuba.net/" }],
   },
   {
-    name: "Joined Kirinohanovel",
-    description: "Joined Kirinohanovel, a novel game production circle.",
+    name: "Joined Kirinoha Novel",
+    description: "Joined Kirinoha Novel, a novel game production circle.",
     year: "2025-07",
     feature: {
       category: "Affiliations",
-      title: "Kirinohanovel",
-      description: "Member of Kirinohanovel, a novel game production circle.",
+      title: "Kirinoha Novel",
+      description: "Member of Kirinoha Novel, a novel game production circle.",
     },
     links: [{ label: "Website", href: "https://kirinohanovel.com/" }],
   },
