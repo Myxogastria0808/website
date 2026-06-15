@@ -8,6 +8,7 @@
 [![build check](https://img.shields.io/github/actions/workflow/status/Myxogastria0808/website/build.yml?label=build)](https://github.com/Myxogastria0808/website/actions/workflows/build.yml)
 [![fmt check](https://img.shields.io/github/actions/workflow/status/Myxogastria0808/website/fmt.yml?label=fmt)](https://github.com/Myxogastria0808/website/actions/workflows/fmt.yml)
 [![lint check](https://img.shields.io/github/actions/workflow/status/Myxogastria0808/website/lint.yml?label=lint)](https://github.com/Myxogastria0808/website/actions/workflows/lint.yml)
+[![typecheck](https://img.shields.io/github/actions/workflow/status/Myxogastria0808/website/typecheck.yml?label=typecheck)](https://github.com/Myxogastria0808/website/actions/workflows/typecheck.yml)
 [![RenovateBot](https://img.shields.io/badge/RenovateBot-1A1F6C?logo=renovate&logoColor=fff)](#)
 [![GitGuardian Shield](https://img.shields.io/badge/protected%20by-GitGuardian-blue?logo=gitguardian&logoColor=white)](https://gitguardian.com/)
 <img alt="gitleaks badge" src="https://img.shields.io/badge/protected%20by-gitleaks-blue">
