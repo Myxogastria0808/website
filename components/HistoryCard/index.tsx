@@ -18,7 +18,11 @@ export default function HistoryCard({
   return (
     <div className={styles.card}>
       <p className={styles.cardName}>{displayName}</p>
-      {displayYear && <span className={styles.cardYear}>{formatYearMonth(entry.year)}</span>}
+      {displayYear && (
+        <span className={styles.cardYear}>
+          {entry.approximate ? `ca. ${formatYearMonth(entry.year)}` : formatYearMonth(entry.year)}
+        </span>
+      )}
       <p className={styles.cardDesc}>{displayDesc}</p>
       {entry.links && entry.links.length > 0 && (
         <div className={styles.links}>

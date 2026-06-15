@@ -41,6 +41,7 @@ export type HistoryEntry = {
   name: string;
   description: string;
   year: YearMonth;
+  approximate?: boolean;
   feature?: HistoryFeature;
   links?: HistoryLink[];
 };
@@ -50,6 +51,12 @@ export const HISTORIES: HistoryEntry[] = [
     name: "Enrolled in Hyogo Prefectural Ono High School",
     description: "Enrolled in Hyogo Prefectural Ono High School.",
     year: "2020-04",
+  },
+  {
+    name: "Joined Biology Club",
+    description: "Joined the Biology Club.",
+    year: "2020-06",
+    approximate: true,
   },
   {
     name: "Graduated from Hyogo Prefectural Ono High School",
@@ -67,6 +74,7 @@ export const HISTORIES: HistoryEntry[] = [
     description:
       "Joined the Sohosai Executive Committee, a student body organizing the University of Tsukuba's annual university festival (雙峰祭).",
     year: "2023-04",
+    approximate: true,
     links: [{ label: "Website", href: "https://sohosai.com/" }],
   },
   {
@@ -87,6 +95,7 @@ export const HISTORIES: HistoryEntry[] = [
     description:
       "Joined WORD, a student-run magazine of the School of Informatics at the University of Tsukuba.",
     year: "2023-12",
+    approximate: true,
     feature: {
       category: "Affiliations",
       title: "WORD Editorial Board",

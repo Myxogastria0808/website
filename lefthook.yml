@@ -1,5 +1,7 @@
 pre-commit:
   commands:
+    typecheck:
+      run: bun run typecheck
     fmt:
       run: bunx oxfmt .
       stage_fixed: true
