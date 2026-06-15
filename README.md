@@ -71,6 +71,15 @@ The following `/skills` are available in Claude Code for managing works data int
 | `/update-tag` | Rename a tag and update all Work references              |
 | `/delete-tag` | Remove a tag and strip it from all Work entries          |
 
+### History
+
+| Skill             | Description                                                                                       |
+| ----------------- | ------------------------------------------------------------------------------------------------- |
+| `/create-history` | Add a new History entry interactively (name → description → year → approximate → feature → links) |
+| `/read-history`   | Display all history entries, optionally filtered by year                                          |
+| `/update-history` | Edit any field of an existing History entry                                                       |
+| `/delete-history` | Remove a History entry                                                                            |
+
 ### Link Labels
 
 | Skill                | Description                                                                                  |
@@ -106,6 +115,7 @@ export const WORKS: Work[] = [
     description: "A short description of the project.",
     tags: ["NewTag"], // must be values defined in TAGS
     year: "2025", // 4-digit string
+    isTopic: false, // true to show in the Topic panel on the homepage
     links: [
       // optional
       { label: "GitHub", href: "https://github.com/..." },
@@ -115,10 +125,24 @@ export const WORKS: Work[] = [
 ];
 ```
 
+**Fields:**
+
+| Field         | Type      | Required | Description                                                        |
+| ------------- | --------- | -------- | ------------------------------------------------------------------ |
+| `name`        | `string`  | Yes      | Title of the work                                                  |
+| `description` | `string`  | Yes      | Short description of the work                                      |
+| `tags`        | `Tag[]`   | Yes      | Tag list — values must be defined in `data/works/tags.ts`          |
+| `year`        | `string`  | Yes      | 4-digit year string (e.g. `"2025"`)                                |
+| `isTopic`     | `boolean` | Yes      | If `true`, the work appears in the **Topic** panel on the homepage |
+| `links`       | array     | No       | List of `{ label, href }` link objects                             |
+
+**`isTopic` behaviour:** Works with `isTopic: true` are shown in the "Topic" sub-section of the Activity section on the homepage (`/`). Set to `false` for works that should only appear on the `/works` page.
+
 **Available `label` values with icons:**
 
 | Label           | Icon           |
 | --------------- | -------------- |
+| `"Website"`     | Globe icon     |
 | `"GitHub"`      | GitHub mark    |
 | `"GitLab"`      | GitLab mark    |
 | `"Cosense"`     | Scrapbox mark  |
@@ -128,5 +152,75 @@ export const WORKS: Work[] = [
 | `"note"`        | note mark      |
 | `"Hatena Blog"` | Hatena mark    |
 | `"Wiki"`        | Wikipedia mark |
+| `"npm"`         | npm mark       |
+| `"crates.io"`   | Rust mark      |
+
+Any other string falls back to an external-link icon.
+
+---
+
+## Adding a History Entry
+
+History entries are displayed on the `/history` page as a timeline.
+
+### Add an entry to `data/history/history.ts`
+
+```ts
+export const HISTORIES: HistoryEntry[] = [
+  // ...existing entries
+  {
+    name: "Event Title",
+    description: "A description of the event.",
+    year: "2025-04", // YYYY-MM format
+    approximate: true, // displays "ca." before the date
+    feature: {
+      // optional — shown in the Affiliations feature panel
+      category: "Affiliations",
+      title: "Organization Name",
+      description: "A short description of the organization.",
+    },
+    links: [
+      // optional
+      { label: "Website", href: "https://example.com" },
+    ],
+  },
+];
+```
+
+**Fields:**
+
+| Field         | Type        | Required | Description                                                |
+| ------------- | ----------- | -------- | ---------------------------------------------------------- |
+| `name`        | `string`    | Yes      | Title of the event shown on the timeline                   |
+| `description` | `string`    | Yes      | Description of the event                                   |
+| `year`        | `YearMonth` | Yes      | Date in `YYYY-MM` format (e.g. `"2025-04"`)                |
+| `approximate` | `boolean`   | Yes      | If `true`, prepends `ca.` to the displayed date            |
+| `feature`     | object      | No       | Shows this entry in the Affiliations panel on the homepage |
+| `links`       | array       | No       | List of `{ label, href }` link objects                     |
+
+**`feature` sub-fields:**
+
+| Field         | Type             | Description                                      |
+| ------------- | ---------------- | ------------------------------------------------ |
+| `category`    | `"Affiliations"` | Fixed value — only `"Affiliations"` is supported |
+| `title`       | `string`         | Organization name shown in the panel             |
+| `description` | `string`         | Short description shown in the panel             |
+
+**Available `label` values for links:**
+
+| Label           | Icon           |
+| --------------- | -------------- |
+| `"Website"`     | Globe icon     |
+| `"GitHub"`      | GitHub mark    |
+| `"GitLab"`      | GitLab mark    |
+| `"Cosense"`     | Scrapbox mark  |
+| `"TogoTV"`      | DNA icon       |
+| `"Qiita"`       | Qiita mark     |
+| `"Zenn"`        | Zenn mark      |
+| `"note"`        | note mark      |
+| `"Hatena Blog"` | Hatena mark    |
+| `"Wiki"`        | Wikipedia mark |
+| `"npm"`         | npm mark       |
+| `"crates.io"`   | Rust mark      |
 
 Any other string falls back to an external-link icon.

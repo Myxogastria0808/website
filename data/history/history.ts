@@ -41,7 +41,7 @@ export type HistoryEntry = {
   name: string;
   description: string;
   year: YearMonth;
-  approximate?: boolean;
+  approximate: boolean;
   feature?: HistoryFeature;
   links?: HistoryLink[];
 };
@@ -51,6 +51,7 @@ export const HISTORIES: HistoryEntry[] = [
     name: "Enrolled in Hyogo Prefectural Ono High School",
     description: "Enrolled in Hyogo Prefectural Ono High School.",
     year: "2020-04",
+    approximate: false,
   },
   {
     name: "Joined Biology Club",
@@ -62,11 +63,13 @@ export const HISTORIES: HistoryEntry[] = [
     name: "Graduated from Hyogo Prefectural Ono High School",
     description: "Graduated from Hyogo Prefectural Ono High School.",
     year: "2023-03",
+    approximate: false,
   },
   {
     name: "Enrolled in University of Tsukuba",
     description: "Enrolled in the School of Informatics, University of Tsukuba.",
     year: "2023-04",
+    approximate: false,
     links: [{ label: "Website", href: "https://www.tsukuba.ac.jp" }],
   },
   {
@@ -82,6 +85,7 @@ export const HISTORIES: HistoryEntry[] = [
     description:
       "Joined Biopackathon, a community hackathon focused on packaging life science databases and data analysis tools as open source software.",
     year: "2023-08",
+    approximate: false,
     feature: {
       category: "Affiliations",
       title: "Biopackathon",
@@ -108,6 +112,7 @@ export const HISTORIES: HistoryEntry[] = [
     description:
       "Joined Ultra-Coins, a student computing organization at the University of Tsukuba, focused on server management and network infrastructure operation.",
     year: "2024-12",
+    approximate: false,
     feature: {
       category: "Affiliations",
       title: "Ultra-Coins",
@@ -121,6 +126,7 @@ export const HISTORIES: HistoryEntry[] = [
     description:
       "Joined Genshiken (現代視覚文化研究会), a subculture circle at the University of Tsukuba, with activities spanning manga, anime, cosplay, doujinshi, and more.",
     year: "2025-04",
+    approximate: false,
     feature: {
       category: "Affiliations",
       title: "Genshiken",
@@ -133,6 +139,7 @@ export const HISTORIES: HistoryEntry[] = [
     name: "Joined Kirinoha Novel",
     description: "Joined Kirinoha Novel, a novel game production circle.",
     year: "2025-07",
+    approximate: false,
     feature: {
       category: "Affiliations",
       title: "Kirinoha Novel",
