@@ -36,7 +36,7 @@ export default function Head() {
       <meta property="og:image:width" content="1072" />
       <meta property="og:image:height" content="603" />
       <meta property="og:type" content="website" />
-      <meta property="og:url" content="https://yukiosada.work" />
+      <meta property="og:url" content="https://yukiosada.work/" />
       {/* OG setting end */}
       {/* Twitter card settings start */}
       <meta name="twitter:card" content="summary_large_image" />
