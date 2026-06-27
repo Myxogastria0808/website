@@ -29,3 +29,61 @@
     font-size: var(--fs-vw2-1);
   }
 }
+
+.cardLink {
+  position: absolute;
+  left: var(--space-md);
+  bottom: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: var(--fs-4);
+  color: var(--color-primary);
+  text-decoration: none;
+  line-height: 1.3;
+  transition: color var(--duration-xs);
+}
+
+.cardLinkLine {
+  border-bottom: var(--border-width) solid var(--color-primary);
+  padding: 0 0 var(--space-xs) 0;
+  transition: border-color var(--duration-xs);
+}
+
+.cardLink:hover {
+  color: var(--color-secondary);
+}
+
+.cardLink:hover .cardLinkLine {
+  border-color: transparent;
+}
+
+@media (max-width: 1200px) {
+  .cardLink {
+    font-size: var(--fs-5);
+  }
+}
+
+@media (max-width: 970px) {
+  .cardLink {
+    font-size: var(--fs-6);
+  }
+}
+
+@media (max-width: 860px) {
+  .cardLink {
+    display: none;
+  }
+}
+
+.linkWrapper {
+  display: none;
+  text-align: center;
+  padding: var(--space-xl) 0 0 0;
+}
+
+@media (max-width: 860px) {
+  .linkWrapper {
+    display: block;
+  }
+}

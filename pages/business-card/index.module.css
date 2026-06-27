@@ -1,0 +1,20 @@
+.cards {
+  display: flex;
+  gap: var(--space-lg);
+  justify-content: center;
+  padding: var(--space-xl) var(--space-md) var(--space-2xl);
+  flex-wrap: wrap;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+.image {
+  width: 20rem;
+  max-width: 100%;
+  border: var(--border-default);
+}

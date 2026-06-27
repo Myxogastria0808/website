@@ -1,3 +1,4 @@
+import { TextLink } from "../../../components";
 import styles from "./index.module.css";
 
 // Golden ratio spiral: viewBox 1618×1000 (φ:1)
@@ -52,6 +53,13 @@ export default function Profile() {
           <br />
           Osada
         </p>
+        <a href="/business-card" className={`${styles.cardLink} font-megrim`}>
+          <span className={styles.cardLinkLine}>VIEW</span>
+          <span className={styles.cardLinkLine}>BUSINESS CARD →</span>
+        </a>
+      </div>
+      <div className={styles.linkWrapper}>
+        <TextLink href="/business-card" content="VIEW BUSINESS CARD →" />
       </div>
     </section>
   );
