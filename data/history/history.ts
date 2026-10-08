@@ -147,4 +147,18 @@ export const HISTORIES: HistoryEntry[] = [
     },
     links: [{ label: "Website", href: "https://kirinohanovel.com/" }],
   },
+  {
+    name: "Joined iGEM Tsukuba",
+    description:
+      "Joined iGEM Tsukuba, a synthetic biology competition team at the University of Tsukuba participating in the International Genetically Engineered Machine (iGEM) competition.",
+    year: "2026-09",
+    approximate: false,
+    feature: {
+      category: "Affiliations",
+      title: "iGEM Tsukuba",
+      description:
+        "Member of the Tech and Web teams at iGEM Tsukuba, a synthetic biology competition team at the University of Tsukuba.",
+    },
+    links: [{ label: "Wiki", href: "https://www.stb.tsukuba.ac.jp/~igemtsukuba/" }],
+  },
 ];
