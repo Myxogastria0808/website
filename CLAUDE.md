@@ -45,6 +45,19 @@ This is a personal website built with **Vike** (SSR framework) + **React 19** de
 - **関数宣言**: `export default function` 以外の関数はすべてアロー関数で書く（`const foo = () => {}`）。named export、ローカル関数、コンポーネント内ヘルパーすべてに適用する。
 - **padding / margin**: CSS Module で `padding-top` / `padding-right` / `padding-bottom` / `padding-left` / `margin-top` 等の個別プロパティは使わない。必ず `padding` / `margin` ショートハンドで書く（例: `padding-bottom: 1rem` ではなく `padding: 0 0 1rem 0`）。
 
+## UI verification
+
+For any UI/frontend change, check it in a real browser using the `agent-browser` CLI (provided by the flake's devShell) instead of only relying on typecheck/lint.
+
+```sh
+bun run dev &                                    # start the dev server (prints the port, e.g. 3000)
+agent-browser open http://localhost:3000/<route>
+agent-browser screenshot --full /tmp/check.png   # then view the screenshot
+agent-browser close                              # end the session when done
+```
+
+Use `agent-browser snapshot -i` / `agent-browser click @eN` / etc. to exercise interactive behavior (forms, filters, hover states), not just static screenshots. See `agent-browser skills get core --full` for the full command reference.
+
 ## NixOS-specific notes
 
 When running in this NixOS/nix flake environment:
@@ -53,3 +66,4 @@ When running in this NixOS/nix flake environment:
 - **`compatibility_date` errors**: The date in `wrangler.jsonc` must not exceed the date encoded in the installed miniflare version (`4.YYYYMMDD.0`).
 - **404 on all pages**: Ensure `pages/+config.ts` has `server: true` to enable the `vike:server-entry` virtual module required by `wrangler.jsonc`.
 - **Wrangler log `EROFS` errors on build**: Wrangler tries to write logs to `~/.config/.wrangler/logs/` which is read-only in this sandbox. Set `WRANGLER_LOG=none` in the shell (or `.envrc`) to suppress the error.
+- **`agent-browser` Chrome fails with `libglib-2.0.so.0: cannot open shared object file`**: its self-downloaded Chrome binary isn't built for NixOS's non-FHS filesystem layout. The flake's devShell works around this by adding `pkgs.chromium` and setting `AGENT_BROWSER_EXECUTABLE_PATH` to it in `shellHook`, so `agent-browser` uses the nixpkgs-built browser instead of downloading its own.

@@ -18,9 +18,12 @@
             bun
             cacert
             gitleaks
+            agent-browser
+            chromium
           ];
           shellHook = ''
             export NODE_EXTRA_CA_CERTS="$NIX_SSL_CERT_FILE"
+            export AGENT_BROWSER_EXECUTABLE_PATH="${pkgs.chromium}/bin/chromium"
           '';
         };
       }
