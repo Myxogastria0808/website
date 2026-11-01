@@ -148,6 +148,20 @@ export const HISTORIES: HistoryEntry[] = [
     links: [{ label: "Website", href: "https://kirinohanovel.com/" }],
   },
   {
+    name: "Joined KDE-SALT",
+    description:
+      "Joined KDE-SALT (Shiokawa Laboratory), one of the research groups in the Knowledge and Data Engineering Laboratory at the University of Tsukuba.",
+    year: "2026-04",
+    approximate: false,
+    feature: {
+      category: "Affiliations",
+      title: "KDE-SALT",
+      description:
+        "Member of KDE-SALT (Shiokawa Laboratory), one of the research groups in the Knowledge and Data Engineering Laboratory at the University of Tsukuba.",
+    },
+    links: [{ label: "Website", href: "https://www.kde-salt.jp/" }],
+  },
+  {
     name: "Joined iGEM Tsukuba",
     description:
       "Joined iGEM Tsukuba, a synthetic biology competition team at the University of Tsukuba participating in the International Genetically Engineered Machine (iGEM) competition.",
