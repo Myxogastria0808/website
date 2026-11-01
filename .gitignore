@@ -4,9 +4,6 @@
 # Local working files
 tmp/
 
-# Agent skills
-.agents/
-
 # Nix
 .direnv/
 
