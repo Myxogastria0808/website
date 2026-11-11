@@ -3,6 +3,10 @@
   "compatibility_date": "2026-05-29",
   "name": "website",
   "main": "vike:server-entry",
+  "routes": [
+    { "pattern": "yukiosada.work", "custom_domain": true },
+    { "pattern": "www.yukiosada.work", "custom_domain": true },
+  ],
   "observability": {
     "logs": {
       "enabled": true,
